@@ -1,0 +1,100 @@
+<ejs-toast #element (created)="onCreate($event)" [position]='position' [animation]="animation"></ejs-toast>
+
+<div class="content-wrapper text-sm">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mt-2">
+        <div class="col-sm-3"><h5 class="m-0 text-dark">Import Recensement</h5></div>
+        <div class="col-sm-6">
+
+          <div>
+            <div role="alert " style="text-align: center">
+              <p style="color: #001cab;font-size: small;"><strong> Télécharger le canevas </strong>
+                <a (click)="exportCanvas()">
+                  <button class="btn fas fa-download mb-1"
+                          style="outline: none;color: #001cab;font-size: small;"></button>
+                </a>
+              </p>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-sm-1 ">
+        </div>
+        <div class="col-sm-1">
+          <button class="btn btn-sm btn-info">
+            <label style="margin-bottom: 0;">
+              <span class="mdi mdi-file-export- "><i class="fas fa-cloud-upload-alt nav-icon"></i>  Import </span>
+              <input class="custom-file-input" type="file"  #fileInput (click)="fileInput.value = null" value=""
+                     hidden accept=".xlsx, .xls, .csv" (change)="importCsv($event)">
+            </label>
+          </button>
+        </div>
+        <div class="col-sm-1">
+          <button (click)="validerImp()" class="btn btn-sm btn-success ml-2"
+          >
+            <span> <i class="fas fa-check"> </i> Valider </span>
+          </button>
+        </div>
+        <!--        <div class="col-sm-4">-->
+        <!--          <ol class="breadcrumb float-sm-right">-->
+        <!--            <li class="breadcrumb-item">-->
+        <!--              <div class="btn-group mr-2">-->
+        <!--                <button class="btn btn-sm btn-info">-->
+        <!--                  <label style="margin-bottom: 0;">-->
+        <!--                    <span class="mdi mdi-file-export- "><i class="fas fa-cloud-upload-alt nav-icon"></i>  Import </span>-->
+        <!--                    <input #fileInput (click)="fileInput.value = null" value="" class="custom-file-input" type="file"-->
+        <!--                           hidden accept=".xlsx, .xls, .csv" (change)="onFileChange($event)">-->
+        <!--                  </label>-->
+        <!--                </button>-->
+        <!--                <button *ngIf="matNoMatch.length===0 && !erreurCanevas" class="btn btn-sm btn-success ml-2">-->
+        <!--                  <span> <i class="fas fa-check"> </i> Valider </span>-->
+        <!--                </button>-->
+        <!--              </div>-->
+        <!--            </li>-->
+        <!--          </ol>-->
+        <!--        </div>-->
+
+      </div>
+    </div>
+    <hr>
+    <div class="row ml-2 mr-2">
+      <ejs-grid #grid
+                *ngIf="intrantsHeader!= undefined && intrantsHeader.length>0"
+                [dataSource]='importData'
+                id="gridcomp" allowSorting='true'
+                height=360
+                gridLines="Both">
+        <e-columns>
+          <e-column field='nni' headerText='CIN' textAlign='Left' width=90></e-column>
+          <e-column field='nom' field='prenom' headerText='Utilisateur' textAlign='Left' width=110>
+            <ng-template #template let-data>
+              {{data.prenom}} {{data.nom}}
+            </ng-template>
+          </e-column>
+          <e-column field='superficie' headerText='Superficie' textAlign='Left' width=80></e-column>
+          <e-column  *ngFor="let intrant of  intrantsHeader ;let i = index;" field='{{intrant}}'
+                    headerText='{{intrant}}'
+                    textAlign='Left' width=90>
+          </e-column>
+        </e-columns>
+        <e-aggregates>
+          <e-aggregate>
+            <e-columns>
+<!--              <e-column  *ngFor="let intrant of  intrantsHeader ;let i = index;"  field="{{intrant}}" type="sum">-->
+<!--                <ng-template #footerTemplate let-data>{{data.sum.toLocaleString()}} </ng-template>-->
+<!--              </e-column>-->
+              <e-column   field="superficie" type="sum">
+                <ng-template #footerTemplate let-data>{{data.sum.toLocaleString()}} </ng-template>
+              </e-column>
+              <e-column    *ngFor="let intrant of  intrantsHeader ;let i = index;" field='{{intrant}}' type="sum">
+                <ng-template #footerTemplate let-data>{{data.sum.toLocaleString()}} </ng-template>
+              </e-column>
+            </e-columns>
+          </e-aggregate>
+        </e-aggregates>
+      </ejs-grid>
+
+    </div>
+  </div>
+</div>

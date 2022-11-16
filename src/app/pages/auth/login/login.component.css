@@ -1,0 +1,15 @@
+.logo-image {
+  padding-left: 32%;
+}
+
+.logoSize{
+  margin-top: -80%;
+  width: 40%;
+  height: 40%;
+}
+
+@media only screen and (max-width: 600px) {
+  .imgFond {
+    display: none;
+  }
+}

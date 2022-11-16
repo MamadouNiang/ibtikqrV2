@@ -1,0 +1,330 @@
+<ejs-toast #element (created)="onCreate($event)" [position]='positionMsg' [animation]="animation"></ejs-toast>
+
+<div class="content-wrapper text-sm">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-3"><h5 class="m-0 text-dark">Gestions des utilisateurs</h5></div><!-- /.col -->
+        <div class="col-sm-2"></div>
+        <div class="col-sm-2">
+          <!--          <div *ngIf="msgValider" class="insertSucess alert  "-->
+          <!--               data-aos="flip-left"-->
+          <!--          > sauvegarde reussie !</div>-->
+          <!--          <div *ngIf="msgErreur" class="insertDanger alert  "-->
+          <!--               data-aos="flip-left"-->
+          <!--          > Utilisateur non trouver ! </div>-->
+        </div><!-- /.col -->
+
+        <div class="col-sm-5">
+          <div class="btn-toolbar mb-2 mb-md-0 breadcrumb float-sm-right">
+            <!--            <form [formGroup]="rechercheForm" (ngSubmit)="onSearchMatricule()">-->
+            <!--              <div class="btn-group mr-2">-->
+            <!--                <input formControlName="matricule"  type="text" class="form-control form-control-sm" placeholder="Entrer le matricule" aria-label="Username" aria-describedby="basic-addon1">-->
+            <!--              </div>-->
+            <!--              <button type="submit" [disabled]="rechercheForm.invalid" class="btn  btn-xs btn-sm btn-success">-->
+            <!--                <i class="bi bi-search"></i> Rechercher</button>-->
+            <!--            </form>-->
+          </div>
+          <!-- /.col -->
+        </div><!-- /.row -->
+      </div>
+      <hr>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-8">
+            <button type="button" (click)="onOpenDialog($event)" [disabled]="tailleSelect>0"
+                    class="btn btn-sm btn-outline-primary"><span class="fas fa-plus "></span> Ajouter
+            </button>
+            <button type="button" [disabled]="tailleSelect>1 || tailleSelect === 0 "
+                    class="btn btn-sm btn-outline-primary ml-4"><span class="fas fa-building "></span> Affecter des
+              Regions
+            </button>
+            <button type="button" (click)="onOpenDialogProfils($event)"
+                    [disabled]="tailleSelect>1 || tailleSelect === 0 " class="btn btn-sm btn-outline-primary ml-4"><span
+              class="fas fa-pencil-alt "></span> Modifier Profils
+            </button>
+            <button type="button" [disabled]="btnValidation || tailleSelect === 0 "
+                    class="btn btn-sm btn-outline-primary ml-4"><span class="fas fa-user-lock "></span>
+              Activer/Desactiver ({{tailleSelect}})
+            </button>
+            <button hidden type="button" class="btn btn-sm btn-outline-danger ml-4"><span class="fas fa- "></span>
+              Supprimer({{tailleSelect}})
+            </button>
+          </div>
+          <div class="col-md-1"></div>
+          <hr class="col-md-5">
+        </div>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+            <ejs-grid
+              #grid
+              [toolbar]='toolbar'
+              [dataSource]='allUsers'
+              [allowSelection]="true"
+              [selectionSettings]='selectionOptions'
+              [groupSettings]="groupOptions"
+              (rowSelected)='rowSelected($event)'
+              (rowDeselected)="rowDeSelected($event)"
+              id="gridcomp"
+              allowPaging='true' height=330
+              gridLines="Both"
+            >
+              <e-columns>
+                <e-column type="checkbox" width="33" textAlign='Left'></e-column>
+                <e-column field='id' headerText='Code' textAlign='Left' width=100></e-column>
+                <e-column field='username' headerText='Matricule' textAlign='Left' width=100></e-column>
+                <e-column field='actived' headerText='Status' width='150'>
+                  <ng-template #template let-data>
+                    <div *ngIf="data.actived === true;else login" class="statustemp e-activecolor">
+                      <span class="statustxt e-activecolor">  <span class="fas fa-check"></span> Actif</span>
+                    </div>
+                    <ng-template #login>
+                      <div class="statustemp e-inactivecolor">
+                        <span class="statustxt e-inactivecolor"><span class="fas fa-times"></span> Inactif</span>
+                      </div>
+                    </ng-template>
+                  </ng-template>
+                </e-column>
+              </e-columns>
+
+            </ejs-grid>
+
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+        <div #container class='root-container'></div>
+        <ejs-dialog (beforeOpen)="validation($event)" class="mt-3" id='dialog' isModal='true' [position]='position'
+                    #ejDialog header='Ajout utilisateur'
+                    showCloseIcon='true'
+                    allowDragging='true'
+                    [target]='targetElement' width='460px'>
+          <ng-template #content>
+            <div class="dialogContent">
+              <form [formGroup]="validerFormAjout" (ngSubmit)="ajoutUser()">
+                <div class="table-responsive ">
+                  <div class="container text-center">
+                    <div class="row g-2 mt-2">
+                      <div class="col"><span> Nom d'utilisateur </span></div>
+                      <div class="col-8">
+                        <input formControlName="username" type="text"
+                               class="form-control form-control-xs form-control-sm"
+                               placeholder="Matricule">
+
+                      </div>
+                    </div>
+                    <div class="row g-2 mt-2">
+                      <div class="col"><span> Mot de passe </span></div>
+                      <div class="col-8">
+                        <input formControlName="password" type="password"
+                               class="form-control form-control-xs form-control-sm"
+                               placeholder="password">
+
+                      </div>
+                    </div>
+
+                    <div class="row g-2 mt-2">
+                      <div class="col"><span> Liste des Roles </span></div>
+                      <div class="col-8">
+                        <ng-select
+                          placeholder="Roles"
+                          formControlName="roles"
+                          appendTo="html"
+                          [dropdownPosition]="'bottom'"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          [searchable]="true"
+                          [clearable]="true"
+                        >
+                          <ng-option *ngFor="let role of tabRoles2 ;let j = index" value="{{role.id}}">
+                            {{role.id}} -- {{role.name}}
+                          </ng-option>
+                        </ng-select>
+
+                      </div>
+                    </div>
+                    <div class="row g-2 mt-2">
+                      <div class="col"><span> Liste des Regions </span></div>
+                      <div class="col-8">
+                        <ng-select
+                          placeholder="REGIONS"
+                          formControlName="regions"
+                          appendTo="html"
+                          [dropdownPosition]="'bottom'"
+                          [multiple]="true"
+                          [closeOnSelect]="false"
+                          [hideSelected]="true"
+                          [searchable]="true"
+                          [clearable]="true"
+                        >
+                          <ng-option *ngFor="let role of tabRoles ;let j = index" value="{{role.id}}">
+                            {{role.id}} -- {{role.name}}
+                          </ng-option>
+                        </ng-select>
+                      </div>
+                    </div>
+                    <div class="row g-2 mt-2">
+                      <div class="col"></div>
+                      <div class="col-8">
+                        <button [disabled]="validerFormAjout.invalid " type="submit"
+                                class="btn btn-sm btn-primary btn-block">Valider
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+
+              </form>
+            </div>
+          </ng-template>
+        </ejs-dialog>
+        <ejs-dialog (beforeOpen)="validation($event)" class="mt-3" id='dialog2' isModal='true' [position]='position2'
+                    #ejDialog2 header='Affectation des etablissements'
+                    showCloseIcon='true'
+                    [target]='targetElement2' width='700px'>
+          <ng-template #content>
+            <div class="dialogContent">
+              <form [formGroup]="validerFormAjoutMin">
+                <div class="input-group mb-3">
+                  <div class="col-sm-10">
+                    <ng-select
+                      bindLabel="roles"
+                      placeholder="Selectionnez les Ministeres"
+                      formControlName="cd_ministere"
+                      appendTo="body"
+                      [dropdownPosition]="'bottom'"
+                      [(ngModel)]="selectedMin"
+                      [multiple]="true"
+                      [closeOnSelect]="false"
+                      [hideSelected]="true"
+                      [searchable]="true"
+                      [clearable]="true"
+                    >
+                      <ng-option class="mt-5" *ngFor="let els of tabRefMinisteres ;let j = index"
+                                 value="{{els.cd_ministere}}">
+                        {{els.cd_ministere}} -- {{els.descrReduit}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                  <div class="col-sm-2 ">
+                    <button [hidden]="tailleSelectMinisteres>0" [disabled]="validerFormAjoutMin.invalid" type="submit"
+                            class="btn btn-sm btn-primary btn-block">Valider
+                    </button>
+                    <button [hidden]="tailleSelectMinisteres===0" [disabled]="btnSupprimer" type="button"
+                            class=" btn btn-sm btn-danger btn-block">supprimer({{tailleSelectMinisteres}})
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <hr>
+              <div class="input-group mb-3">
+                <div class="col-sm-12">
+                  <ejs-grid
+                    #grid2
+                    [dataSource]='tabMinisteres'
+                    [allowSelection]="true"
+                    [selectionSettings]='selectionOptions'
+                    [groupSettings]="groupOptions"
+                    (rowSelected)='rowSelectedMinistere($event)'
+                    (rowDeselected)="rowDeSelectedMinistere($event)"
+                    id="gridcompMinisteres"
+                    allowPaging='true' height=250
+                    gridLines="Both"
+                  >
+                    <e-columns>
+                      <e-column type="checkbox" width="33" textAlign='Left'></e-column>
+                      <e-column field='cd_ministere' headerText='Code' textAlign='Left' width=50></e-column>
+                      <e-column field='descrReduit' headerText='Description' textAlign='Left' width=200></e-column>
+
+                    </e-columns>
+
+                  </ejs-grid>
+
+                </div>
+              </div>
+
+            </div>
+          </ng-template>
+        </ejs-dialog>
+        <ejs-dialog (beforeOpen)="validation($event)" class="mt-3" id='dialog3' isModal='true' [position]='position3'
+                    #ejDialog3 header="Modification des Profils d'un utilisateur"
+                    showCloseIcon='true'
+                    [target]='targetElement' width='560px'>
+          <ng-template #content>
+            <div class="dialogContent">
+              <form [formGroup]="validerFormProfil">
+                <div class="input-group mb-3">
+                  <div class="col-sm-9">
+                    <ng-select
+                      bindLabel="roles"
+                      placeholder="Selectionnez les Profils"
+                      formControlName="roleName"
+                      appendTo="body"
+                      [dropdownPosition]="'bottom'"
+                      [(ngModel)]="selectedProfils"
+                      [multiple]="true"
+                      [closeOnSelect]="false"
+                      [hideSelected]="true"
+                      [searchable]="true"
+                      [clearable]="true"
+                    >
+                      <ng-option *ngFor="let role of tabRoles2 ;let j = index" value="{{role.roleName}}">
+                        {{role.id}} -- {{role.roleName}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                  <div class="col-sm-3 ">
+                    <button [hidden]="tailleSelectProfils>0" [disabled]="validerFormProfil.invalid" type="submit"
+                            class="btn btn-sm btn-primary btn-block">Valider
+                    </button>
+                    <button [hidden]="tailleSelectProfils===0" [disabled]="btnSupprimerProfil" type="button"
+                            class=" btn btn-sm btn-danger btn-block">supprimer({{tailleSelectProfils}})
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <hr>
+              <div class="input-group mb-3">
+                <div class="col-sm-12">
+                  <ejs-grid
+                    #grid3
+                    [dataSource]='tabProfils'
+                    [allowSelection]="true"
+                    [selectionSettings]='selectionOptions'
+                    [groupSettings]="groupOptions"
+                    (rowSelected)='rowSelectedProfils($event)'
+                    (rowDeselected)="rowDeSelectedProfils($event)"
+                    id="gridcompProfils"
+                    allowPaging='true' height=250
+                    gridLines="Both"
+                  >
+                    <e-columns>
+                      <e-column type="checkbox" width="33" textAlign='Left'></e-column>
+                      <e-column field='id' headerText='Code' textAlign='Left' width=60></e-column>
+                      <e-column field='roleName' headerText='Role' textAlign='Left' width=150></e-column>
+                      <e-column field='description' headerText='Description' textAlign='Left' width=200></e-column>
+
+                    </e-columns>
+
+                  </ejs-grid>
+
+                </div>
+              </div>
+
+            </div>
+          </ng-template>
+        </ejs-dialog>
+
+      </div>
+    </section>
+  </div>
+</div>

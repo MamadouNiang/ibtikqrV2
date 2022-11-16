@@ -1,0 +1,161 @@
+<body class="hold-transition ">
+
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-5 text-center">
+        <img src="assets/img/2.jpg" class="img-fluid imgFond" style="margin-left: -3%">
+      </div>
+      <div class="col-1 text-center ml-5">
+      </div>
+      <div class="col-4 login-box" style="margin: auto 0;">
+        <div>
+          <div class="card  card-outline card-primary">
+            <div class="card-header text-center">
+              <div>
+                <img src="assets/img/logo.png " style="width: 20%">
+              </div>
+              <a class="h3"><b> Gestion des subventions </b> </a>
+            </div>
+            <div class="card-body">
+              <p class="login-box-msg"> Subvention des engrais et d'herbicides pour les campagnes agricoles
+                annuelles </p>
+
+              <form #f="ngForm" (ngSubmit)="onLogin(f.value)">
+                <div class="input-group mb-3">
+                  <input class="form-control" name="username" ngModel placeholder="Matricule" type="text">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span class="fas fa-envelope"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="input-group mb-3">
+                  <input class="form-control" name="password" ngModel placeholder="Password" type="password">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span class="fas fa-lock"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-8">
+                  </div>
+                  <div class="col-4">
+                    <button [disabled]="CheckCon" class="btn btn-sm btn-primary btn-block" type="submit">se connecter
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <div class="mb-3">
+                <p (click)="onOpenDialog($event)" class="btn btn-sm " id="targetButton"
+                   style="position: absolute;color: dodgerblue">Changer votre mot de passe</p>
+                <div #container class='root-container'></div>
+                <ejs-dialog #ejDialog (beforeOpen)="validation($event)" [position]='position' [target]='targetElement'
+                            class="mt-3"
+                            header='Changement de mot de passe' id='dialog'
+                            isModal='true'
+                            showCloseIcon='true' width='360px'>
+                  <ng-template #content>
+                    <div class="dialogContent">
+                      <form #f="ngForm" (ngSubmit)="onChange(f.value)">
+                        <div class="input-group mb-3">
+                          <input class="form-control form-control-xs form-control-sm" name="username" ngModel
+                                 placeholder="Matricule" type="text">
+                          <div class="input-group-append">
+                            <div class="input-group-text">
+                              <span class="fas fa-envelope"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="input-group mb-3">
+                          <input class="form-control form-control-xs form-control-sm" name="apassword" ngModel
+                                 placeholder="Ancien Password"
+                                 type="password">
+                          <div class="input-group-append">
+                            <div class="input-group-text">
+                              <span class="fas fa-lock"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="input-group mb-3">
+                          <input class="form-control form-control-xs form-control-sm" name="npassword" ngModel
+                                 placeholder="Nouveau Password"
+                                 type="password">
+                          <div class="input-group-append">
+                            <div class="input-group-text">
+                              <span class="fas fa-lock"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="input-group mb-3">
+                          <input class="form-control form-control-xs form-control-sm" name="nnpassword" ngModel
+                                 placeholder="Confirmation Nouveau Password"
+                                 type="password">
+                          <div class="input-group-append">
+                            <div class="input-group-text">
+                              <span class="fas fa-lock"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-8">
+                          </div>
+                          <div class="col-4">
+                            <button [disabled]="btnValider" class="btn btn-sm btn-primary btn-block" type="submit">
+                              Valider
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+
+                    </div>
+                  </ng-template>
+                </ejs-dialog>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-1 text-center">
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+<ejs-toast #element (created)="onCreate($event)" [animation]="animation" [position]='positionmsg'></ejs-toast>
+<div #container class='root-container'></div>
+<ejs-dialog #ejDialog2 (beforeOpen)="validation($event)" [position]='positionX' [target]='targetElement2' class="mt-3"
+            header='Gestion Profil : '
+            id='dialog2'
+            isModal='true'
+            showCloseIcon='true' width='365px'>
+  <ng-template #content>
+
+    <div class="dialogContent text-sm">
+      <form (ngSubmit)="validationProfil()" [formGroup]="validerFormProfil">
+        <ng-select
+          [(ngModel)]="selectedRole"
+          [clearable]="true"
+          [searchable]="true"
+          appearance="outline"
+          appendTo="body"
+          bindLabel="name"
+          class="custom-class"
+          formControlName="roleName"
+          placeholder="Selectionner un profil"
+        >
+          <ng-option *ngFor="let codeService of listRoles  " value="{{codeService}}">
+            {{codeService}}
+          </ng-option>
+        </ng-select>
+        <br>
+        <button [disabled]="validerFormProfil.invalid" class="btn btn-sm btn-info ml-auto  btn-block" type="submit">
+          <i class="bi bi-check"></i> Valider
+        </button>
+      </form>
+    </div>
+  </ng-template>
+</ejs-dialog>
+</body>

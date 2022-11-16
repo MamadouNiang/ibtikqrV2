@@ -1,0 +1,405 @@
+<ejs-toast #element (created)="onCreate($event)" [animation]="animation" [position]='position'></ejs-toast>
+<div class="content-wrapper text-sm">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6"><h5 class="m-0 text-dark">Définition de besoin d'Intrants Agricole </h5></div>
+        <hr>
+        <div #container class='root-container'></div>
+        <ejs-dialog #ejDialog (beforeOpen)="validation($event)" [position]='positionModal' [target]='targetElement'
+                    class="mt-3"
+                    header="Ajout d'un Intrant Agricole" id='dialog'
+                    isModal='true'
+                    showCloseIcon='true' width='560px'>
+          <ng-template #content>
+            <div class="dialogContent">
+              <form (ngSubmit)="validationAjout()" [formGroup]="validerFormAjout">
+                <div class="table-responsive ">
+                  <!--                  <p class="text-center "><strong> CAMPAGNE AGRICOLE : CA/{{myDateYear}}/{{myDateMonth}}/... </strong>-->
+                  <!--                  </p>-->
+                  <div class="container text-center">
+                    <div class="row g-2 mt-2">
+                      <div class="col font-weight-bold"><span> Libellé de l'Intrant </span></div>
+                      <div class="col-8">
+                        <input class="text-center form-control form-control-xs form-control-sm"
+                               placeholder="Ecrire le Libellé ... "
+                               formControlName="name"
+                               type="text">
+
+                      </div>
+                    </div>
+                    <div class="row g-2 mt-2">
+                      <div class="col font-weight-bold"><span> Description </span></div>
+                      <div class="col-8">
+                        <textarea class="form-control form-control-xs form-control-sm"
+                                  placeholder="Ecrire une Description ... "
+                                  formControlName="description"></textarea>
+
+                      </div>
+                    </div>
+                    <div class="row g-2 mt-2">
+                      <div class="col font-weight-bold">
+                        <span>Unité de Messure</span>
+                      </div>
+                      <div class="col-8">
+                        <ng-select
+                          [clearable]="true"
+                          [searchable]="true"
+                          [closeOnSelect]="true"
+                          [hideSelected]="true"
+                          [multiple]="false"
+                          appearance="outline"
+                          bindLabel="name"
+                          class="custom-class"
+                          placeholder="selection unité de messure"
+                          formControlName="unit"
+                        >
+                          <ng-option value="L">
+                            L (litres)
+                          </ng-option>
+                          <ng-option value="KG">
+                            Kg (Kilogrammes)
+                          </ng-option>
+                        </ng-select>
+                      </div>
+                    </div>
+                    <div class="row g-2 mt-2">
+                      <div class="col font-weight-bold">
+                        <span>Prix Unitaire / Kg</span>
+                      </div>
+                      <div class="col-8">
+                        <input class="form-control form-control-xs form-control-sm" type="number" min="0"
+                               placeholder="saisir le prix unitaire par Kg"
+                               formControlName="unitCost">
+                      </div>
+                    </div>
+                    <div class="row g-2 mt-2">
+                      <div class="col-10">
+                      </div>
+                      <div class="col-2">
+                        <button [disabled]="validerFormAjout.invalid "
+                                class="btn btn-sm btn-success btn-block font-weight-bold"
+                                type="submit">Valider
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+              </form>
+
+            </div>
+          </ng-template>
+        </ejs-dialog>
+
+      </div>
+      <hr>
+    </div>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-md-12 text-center">
+            <div>
+              <button [disabled]="tailleSelect>0" (click)="onOpenDialog($event)" class="btn btn-sm btn-outline-primary"
+                      type="button"><span
+                class="fas fa-plus "></span>
+                Ajouter
+              </button>
+              <button (click)="onOpenDialogModification($event)" [disabled]="tailleSelect>1 || tailleSelect === 0 "
+                      class="btn btn-sm btn-outline-primary ml-4"
+                      type="button"><span class="fas fa-building "></span>
+                Modifier
+              </button>
+              <button (click)="deletes()" [disabled]=" tailleSelect === 0 " class="btn btn-sm btn-outline-danger ml-4" type="button"><span
+                class="fas fa- "></span>
+                Supprimer({{tailleSelect}})
+              </button>
+            </div>
+            <hr class="col-md-5">
+            <div>
+              <ejs-grid
+                #grid
+                [allowSelection]="true"
+                [selectionSettings]='selectionOptions'
+                (rowSelected)='rowSelected($event)'
+                (rowDeselected)="rowDeSelected($event)"
+                [dataSource]='intrantData'
+                [groupSettings]='groupOptions'
+                [allowGrouping]='true'
+                allowSorting='true' gridLines="Both"
+                height=360
+                id="gridcomp"
+
+              >
+                <e-columns>
+                  <e-column type="checkbox" width="33" textAlign='Left'></e-column>
+                  <e-column field='unit' headerText='Unité de Messure'  width=100>
+                    <ng-template #template let-data>
+                      {{data.unit}}
+                    </ng-template>
+                  </e-column>
+                  <e-column field='intrant' headerText='Libellé' textAlign='Left' width=150>
+                    <ng-template #template let-data>
+                      {{data.name}}
+                    </ng-template>
+                  </e-column>
+                  <e-column field='description' headerText='Description' textAlign='Left' width=150>
+                    <ng-template #template let-data>
+                      {{data.description}}
+                    </ng-template>
+                  </e-column>
+<!--                  <e-column field='quantite' headerText='Quantité' textAlign='Left' width=100>-->
+<!--                    <ng-template #template let-data>-->
+<!--                      {{data.quantite.toLocaleString()}}-->
+<!--                    </ng-template>-->
+<!--                  </e-column>-->
+
+                  <e-column field='unitCost' headerText="Prix Unitaire" textAlign='Left' width=130>
+                    <ng-template #template let-data>
+                      {{data.unitCost.toLocaleString()}}
+                    </ng-template>
+                  </e-column>
+<!--                  <e-column field='cout' headerText="Coûts (MRU)" textAlign='Left' width=120>-->
+<!--                    <ng-template #template let-data>-->
+<!--                      {{data.cout.toLocaleString()}}-->
+<!--                    </ng-template>-->
+<!--                  </e-column>-->
+                  <e-column field='createdAt' headerText="Date Creation" textAlign='Left' width=100>
+                    <ng-template #template let-data>
+                      {{data.createdAt}}
+                    </ng-template>
+                  </e-column>
+                  <e-column headerText='Option' textAlign='Center' width=80>
+                    <ng-template #template let-data>
+                      <a (click)="onOpenDialogDetail($event,data)" class="btn btn-sm " style="color: #3d3b3b"><i
+                        class="far fa-eye"> detail</i></a>
+                    </ng-template>
+                  </e-column>
+                </e-columns>
+                <e-aggregates>
+                  <e-aggregate>
+                    <e-columns>
+                      <e-column field="cout" type="sum">
+                        <ng-template #groupFooterTemplate let-data>{{data.sum.toLocaleString()}} </ng-template>
+                      </e-column>
+                      <e-column field="unitCost" type="sum">
+                        <ng-template #groupFooterTemplate let-data>{{data.sum.toLocaleString()}}  MRU/ {{data.key }} </ng-template>
+                      </e-column>
+<!--                      <e-column field="quantite" type="sum">-->
+<!--                        <ng-template #groupFooterTemplate let-data>{{data.sum.toLocaleString()}} </ng-template>-->
+<!--                      </e-column>-->
+<!--                      <e-column field="cout" type="sum">-->
+<!--                        <ng-template #footerTemplate let-data> {{data.sum.toLocaleString()}}</ng-template>-->
+<!--                      </e-column>-->
+                    </e-columns>
+                  </e-aggregate>
+                </e-aggregates>
+              </ejs-grid>
+            </div>
+
+          </div>
+        </div>
+
+        <ejs-dialog (beforeOpen)="validation($event)" class="mt-3" id='dialogDetail' isModal='true'
+                    [position]='IntrantDetail' #ejDialogDetail header="Detail de l'intrant :{{userDetailCodeIntrant}}"
+                    showCloseIcon='true'
+                    [target]='targetElement' width='560px'>
+          <ng-template #content>
+            <div class="dialogContent">
+
+              <div class="table-responsive ">
+                <!--                  <p class="text-center "><strong> CAMPAGNE AGRICOLE : CA/{{myDateYear}}/{{myDateMonth}}/... </strong>-->
+                <!--                  </p>-->
+                <div class="container text-center">
+                  <div class="row g-2 mt-2">
+                    <div class="col font-weight-bold"><span> Libellé de l'Intrant </span></div>
+                    <div class="col-8">
+                      <input *ngIf="detaiIntrant!=undefined"
+                             class="text-center form-control form-control-xs form-control-sm" type="text"
+                             value="{{detaiIntrant.name}}">
+
+                    </div>
+                  </div>
+                  <div class="row g-2 mt-2">
+                    <div class="col font-weight-bold"><span> Description </span></div>
+                    <div class="col-8">
+                      <textarea *ngIf="detaiIntrant!=undefined"
+                                class="form-control form-control-xs form-control-sm" type="text"
+                                value="{{detaiIntrant.description}}"></textarea>
+
+                    </div>
+                  </div>
+                  <div class="row g-2 mt-2">
+                    <div class="col font-weight-bold">
+                      <span>Unité de Messure</span>
+                    </div>
+                    <div class="col-8">
+                      <input *ngIf="detaiIntrant!=undefined"
+                             class="text-center form-control form-control-xs form-control-sm" type="text"
+                             value="{{detaiIntrant.unit}}">
+
+
+                    </div>
+                  </div>
+                  <div class="row g-2 mt-2">
+                    <div class="col font-weight-bold">
+                      <span>Prix Unitaire</span>
+                    </div>
+                    <div class="col-8">
+                      <input *ngIf="detaiIntrant!=undefined"
+                             class="text-center form-control form-control-xs form-control-sm" type="text"
+                             value="{{detaiIntrant.unitCost}}">
+
+                    </div>
+                  </div>
+                  <div class="row g-2 mt-2">
+                    <div class="col font-weight-bold">
+                      <span>Date Creation</span>
+                    </div>
+                    <div class="col-8">
+                      <input *ngIf="detaiIntrant!=undefined"
+                             class="text-center form-control form-control-xs form-control-sm" type="text"
+                             value="{{detaiIntrant.createdAt}}">
+
+                    </div>
+                  </div>
+<!--                  <div class="row g-2 mt-2">-->
+<!--                    <div class="col font-weight-bold">-->
+<!--                      <span>Saisisseur</span>-->
+<!--                    </div>-->
+<!--                    <div class="col-8">-->
+<!--                      <input *ngIf="detaiIntrant!=undefined" disabled-->
+<!--                             class="text-center form-control form-control-xs form-control-sm" type="text"-->
+<!--                             placeholder="{{detaiIntrant.saissiseurIntrant}}">-->
+
+<!--                    </div>-->
+<!--                  </div>-->
+
+                </div>
+                <br>
+              </div>
+
+
+            </div>
+          </ng-template>
+        </ejs-dialog>
+        <ejs-dialog (beforeOpen)="validation($event)" class="mt-3" id='dialogModification' isModal='true'
+                    [position]='IntrantModification' #ejDialogModification
+                    header="Modification de l'intrant :{{userDetailCodeModification}}"
+                    showCloseIcon='true'
+                    [target]='targetElement' width='560px'>
+          <ng-template #content>
+            <div class="dialogContent">
+              <form (ngSubmit)="validationModification()" [formGroup]="validerFormModification">
+                <div class="table-responsive ">
+                  <!--                  <p class="text-center "><strong> CAMPAGNE AGRICOLE : CA/{{myDateYear}}/{{myDateMonth}}/... </strong>-->
+                  <!--                  </p>-->
+                  <div class="container text-center">
+                    <div class="row g-2 mt-2">
+                      <div class="col font-weight-bold"><span> Libellé de l'Intrant </span></div>
+                      <div class="col-8">
+                        <input *ngIf="detaiIntrantModification!=undefined"
+                               class="text-center form-control form-control-xs form-control-sm" type="text"
+                               formControlName="name"
+                               placeholder="{{detaiIntrantModification.name}}">
+
+                      </div>
+                    </div>
+                    <div class="row g-2 mt-2">
+                      <div class="col font-weight-bold"><span> Description </span></div>
+                      <div class="col-8">
+                      <textarea *ngIf="detaiIntrantModification!=undefined"
+                                class="form-control form-control-xs form-control-sm" type="text"
+                                formControlName="description"
+                                placeholder="{{detaiIntrantModification.description}}"></textarea>
+
+                      </div>
+                    </div>
+                    <div class="row g-2 mt-2">
+                      <div class="col font-weight-bold">
+                        <span>Unité de Messure</span>
+                      </div>
+                      <div class="col-8">
+                        <ng-select *ngIf="detaiIntrantModification!=undefined"
+                                   [clearable]="true"
+                                   [searchable]="true"
+                                   [closeOnSelect]="true"
+                                   [hideSelected]="true"
+                                   [multiple]="false"
+                                   appearance="outline"
+                                   bindLabel="name"
+                                   class="custom-class"
+                                   placeholder="{{detaiIntrantModification.unit}}"
+                                   formControlName="unit"
+                        >
+                          <ng-option value="L">
+                            L (litres)
+                          </ng-option>
+                          <ng-option value="KG">
+                            Kg (Kilogramme)
+                          </ng-option>
+
+                        </ng-select>
+
+                      </div>
+                    </div>
+                    <div class="row g-2 mt-2">
+                      <div class="col font-weight-bold">
+                        <span>Prix Unitaire</span>
+                      </div>
+                      <div class="col-8">
+                        <input *ngIf="detaiIntrantModification!=undefined"
+                               class="text-center form-control form-control-xs form-control-sm" type="number"
+                               formControlName="unitCost" value="{{detaiIntrantModification.unitCost}}">
+
+                      </div>
+                    </div>
+<!--                    <div class="row g-2 mt-2">-->
+<!--                      <div class="col font-weight-bold">-->
+<!--                        <span>Date Creation</span>-->
+<!--                      </div>-->
+<!--                      <div class="col-8">-->
+<!--                        <input *ngIf="detaiIntrantModification!=undefined" disabled-->
+<!--                               class="text-center form-control form-control-xs form-control-sm" type="text"-->
+<!--                               placeholder="{{detaiIntrantModification.dateCreation}}">-->
+
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <div class="row g-2 mt-2">-->
+<!--                      <div class="col font-weight-bold">-->
+<!--                        <span>Saisisseur</span>-->
+<!--                      </div>-->
+<!--                      <div class="col-8">-->
+<!--                        <input *ngIf="detaiIntrantModification!=undefined" disabled-->
+<!--                               class="text-center form-control form-control-xs form-control-sm" type="text"-->
+<!--                               placeholder="{{detaiIntrantModification.saissiseurIntrant}}">-->
+
+<!--                      </div>-->
+<!--                    </div>-->
+                    <div class="row g-2 mt-2">
+                      <div class="col-10">
+                        {{validerFormModification.value | json}}
+                      </div>
+                      <div class="col-2">
+                        <button [disabled]="validerFormModification.invalid "
+                                class="btn btn-sm btn-success btn-block font-weight-bold"
+                                type="submit">Valider
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+                  <br>
+                </div>
+              </form>
+
+            </div>
+          </ng-template>
+        </ejs-dialog>
+
+      </div>
+    </section>
+
+  </div>
+</div>
