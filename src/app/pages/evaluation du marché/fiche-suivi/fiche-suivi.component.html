@@ -1,0 +1,366 @@
+<div class="content-wrapper text-sm">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="card card-primary card-outline card-tabs">
+        <div class="card-header">
+          <h5 class="card-title"><strong> Fiche de suivi des activités de la campagne ( {{myDate}} )</strong>
+          </h5>
+          <div class="card-tools">
+            <form [formGroup]="validerFormCampagne">
+              <select (change)="createStaticalSheetByCampagne()"
+                      formControlName="idCamp"
+                      class="form-control form-control-sm">
+                <option selected disabled value="">-- selectionner une campagne --
+                </option>
+                <option *ngFor="let ca of campagnes" value="{{ca.id}}">
+                  {{ca.code}}
+                </option>
+              </select>
+
+            </form>
+            <!--            <button type="button" class="btn btn-tool" data-card-widget="collapse">-->
+            <!--              <i class="fas fa-minus"></i>-->
+            <!--            </button>-->
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div id="stepper1" class="bs-stepper">
+            <div>
+              <div class="bs-stepper-header" role="tablist">
+                <!-- your steps here -->
+                <div class="step" data-target="#inf1">
+                  <button type="button" class="step-trigger" role="tab" aria-controls="inf1" id="inf1-trigger">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">Infos Générale</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#inf2">
+                  <button [disabled]="validerFormCampagne.invalid" type="button" class="step-trigger" role="tab"
+                          aria-controls="inf2" id="inf2-trigger">
+                    <span class="bs-stepper-circle">2</span>
+                    <span class="bs-stepper-label">Exploitation</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#inf3">
+                  <button [disabled]="validerFormCampagne.invalid" type="button" class="step-trigger" role="tab"
+                          aria-controls="inf3" id="inf3-trigger">
+                    <span class="bs-stepper-circle">3</span>
+                    <span class="bs-stepper-label">DonnéesTéchniques</span>
+                  </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#inf4">
+                  <button [disabled]="validerFormCampagne.invalid" type="button" class="step-trigger" role="tab"
+                          aria-controls="inf4" id="inf4-trigger">
+                    <span class="bs-stepper-circle">4</span>
+                    <span class="bs-stepper-label">Récapitulatif</span>
+                  </button>
+                </div>
+              </div>
+              <div class="bs-stepper-content">
+                <!-- your steps content here -->
+                <form [formGroup]="validerFormStep1" class="needs-validation">
+                  <div id="inf1" class="content" role="tabpanel" aria-labelledby="inf1-trigger">
+                    <div class="row separateLine">
+                      <div class="col ">
+                        <div class="text-center form-group">
+                          <label> <u>Informations Génerales </u></label>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label>Wilaya*</label>
+                            <input
+                              value="{{region}}"
+                              formControlName="region"
+                              disabled
+                              type="text"
+                              class="form-control form-control-sm" placeholder="{{region}}">
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label>Moughataa</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Moughataa">
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label>Commune</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Commune">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label>Téléphone*</label>
+                            <input
+                              required
+                              maxlength=8 minlength=8
+                              type="number" class="form-control form-control-sm"
+                              placeholder="Numero de téléphone"
+                              formControlName="telephone"
+                              [class.is-invalid]="validerFormStep1.get('telephone')!.invalid && (validerFormStep1.get('telephone')!.dirty || validerFormStep1.get('telephone')!.touched)"
+                            >
+                          </div>
+                          <div
+                            *ngIf="validerFormStep1.get('telephone')!.invalid && (validerFormStep1.get('telephone')!.dirty || validerFormStep1.get('telephone')!.touched )"
+                          >
+                            <small class="text-danger">
+                              Email address is required.
+                            </small>
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label>WhatsApp</label>
+                            <input type="number" class="form-control form-control-sm" placeholder="Numero WhatsApp">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label>Nom de l'Encadreur*</label>
+                            <input formControlName="region"
+                                   disabled
+                                   value="{{user}}"
+                                   type="text" class="form-control form-control-sm" placeholder="{{user}}">
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label>Email</label>
+                            <input type="email" class="form-control form-control-sm" placeholder="Adresse Mail">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col ">
+                        <div class="text-center form-group">
+                          <label><u>Informations du site</u></label>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label>Site*</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Nom du site">
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label>Coordonnées*</label>
+                            <input type="number" class="form-control form-control-sm" placeholder="Latitude">
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label><p></p></label>
+                            <input type="number" class="form-control form-control-sm" placeholder="Longitude">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label>Responsable*</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Nom du Responsable">
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label>Téléphone</label>
+                            <input type="number" class="form-control form-control-sm" placeholder="Numero de téléphone">
+                          </div>
+
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label>Sup potentielle á exploiter</label>
+                            <input type="text" class="form-control form-control-sm"
+                                   placeholder="Superficie potentielle á exploiter">
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label>Sup Emblavée</label>
+                            <input type="email" class="form-control form-control-sm" placeholder="Superficie Emblavée">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button [disabled]="validerFormCampagne.invalid && validerFormStep1.invalid"
+                            class="btn btn-primary btn-sm" (click)="next()">Suivant
+                    </button>
+                  </div>
+
+                </form>
+                <div id="inf2" class="content" role="tabpanel" aria-labelledby="inf2-trigger">
+                  <div class="text-center form-group">
+                    <label> <u>Informations de l'exploitation </u></label>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Nature de l'exploitation*</label>
+                      <select class="form-control form-control-sm">
+                        <option selected disabled value="">-- selectionner la nature de l'exploitation --
+                        </option>
+                        <option value="cooperative">Coopérative</option>
+                        <option value="familiale">Familiale</option>
+                        <option value="privee">Privée</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Nombre d'adhérents</label>
+                      <input type="number" class="form-control form-control-sm" placeholder="Nombre">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Nombre de bénéficiaires</label>
+                      <input type="number" class="form-control form-control-sm" placeholder="Nombre">
+                    </div>
+                  </div>
+
+                  <label class="mt-2">Matériel Agricole*</label>
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <input type="text" class="form-control form-control-sm" placeholder="type">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <input type="number" class="form-control form-control-sm" placeholder="nombre ">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <input type="text" class="form-control form-control-sm" placeholder="etat">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <input type="textarea" class="form-control form-control-sm" placeholder="observation">
+                    </div>
+                  </div>
+
+                  <label class="mt-2">Eau d'irrigation*</label>
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <label>source d'eau</label>
+                      <select class="form-control form-control-sm">
+                        <option selected disabled value="">-- selectionner la source d'irrigation --
+                        </option>
+                        <option value="puisards">Puisards</option>
+                        <option value="puits">Puits</option>
+                        <option value="forage">Forage</option>
+                        <option value="robinet">Robinet</option>
+                        <option value="lac">Marc / Lac</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Moyens d'exhaure</label>
+                      <select class="form-control form-control-sm">
+                        <option selected disabled value="">-- selectionner le Moyen d'exhaure --
+                        </option>
+                        <option value="manuel">Manuel</option>
+                        <option value="gmp">GMP</option>
+                        <option value="solaire">Solaire</option>
+                        <option value="electrique">Electrique</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Systéme d'irrigation</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="Systéme d'irrigation">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Nature du Sol</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="Nature de votre sol">
+                    </div>
+                  </div>
+
+                  <label class="mt-2">Principale Techniques*</label>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Technique vulgarisées</label>
+                      <ng-select
+                        [clearable]="true"
+                        [searchable]="true"
+                        [closeOnSelect]="true"
+                        [hideSelected]="true"
+                        [multiple]="true"
+                        appearance="outline"
+                        bindLabel="name"
+                        class="custom-class"
+                        placeholder="selection des technique vulgarisées"
+                      >
+                        <ng-option value="L">Preparation du Compost</ng-option>
+                        <ng-option value="L">Confection des Planches et des billons</ng-option>
+                        <ng-option value="L">Fumure de fond Organique</ng-option>
+                        <ng-option value="L">Fumure de fond Minérale</ng-option>
+                        <ng-option value="L">Entretien des pépiniéres</ng-option>
+                        <ng-option value="L">Traitement de pépiniére avant le repiquage</ng-option>
+                        <ng-option value="L">Repiquage</ng-option>
+                        <ng-option value="L">Desherbage</ng-option>
+                        <ng-option value="L">Binage</ng-option>
+                        <ng-option value="L">Buttage</ng-option>
+                        <ng-option value="L">Tuteurage</ng-option>
+                        <ng-option value="L">Fertilisation de couverture</ng-option>
+                        <ng-option value="L">Traitement des ennemis des cultures</ng-option>
+                        <ng-option value="L">Traitement de récolte et post-récolte</ng-option>
+                      </ng-select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Type de Fertélisant</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="Type de Fertilisant">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Quantité utilisée</label>
+                      <input type="number" class="form-control form-control-sm" placeholder="Quantité utilisée">
+                    </div>
+                  </div>
+
+                  <button class="btn btn-primary btn-sm " (click)="previous()">Précédent</button>
+                  <button class="btn btn-primary btn-sm ml-1" (click)="next()">Suivant</button>
+                </div>
+                <div id="inf3" class="content" role="tabpanel" aria-labelledby="inf3-trigger">
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <label>Spéculations</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="Spéculations">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label>Variétés</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="Variétés">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label>Superficie</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="Superficie">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Date de sémis en pépiniére</label>
+                      <input type="date" class="form-control form-control-sm">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label>Date de repiquage</label>
+                      <input type="date" class="form-control form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label>Stade de cultrure</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="Stade de cultrure">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>Situation phytosanitaire</label>
+                      <select class="form-control form-control-sm">
+                        <option selected disabled value="">-- selectionner la Situation phytosanitaire --
+                        </option>
+                        <option value="ennemies">Ennemies</option>
+                        <option value="maladies">Maladies</option>
+                        <option value="lutes">Moyens de lutte / traitements</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Observation</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="Observation de la situation">
+                    </div>
+                    <!--                  <div class="form-group col-md-1 mt-4">-->
+                    <!--                    <label><p></p></label>-->
+                    <!--                    <button-->
+                    <!--                      class="btn-outline-primary fas fa-plus"-->
+                    <!--                      type="button">-->
+                    <!--                    </button>-->
+                    <!--                  </div>-->
+                  </div>
+                  <button class="btn btn-sm btn-primary" (click)="previous()">Précédent</button>
+                  <button class="btn btn-primary btn-sm ml-1" (click)="next()">Suivant</button>
+                </div>
+                <div id="inf4" class="content" role="tabpanel" aria-labelledby="inf4-trigger">
+                  <button class="btn btn-sm btn-primary" (click)="previous()">Précédent</button>
+                  <!--                <button type="submit" class="btn btn-primary">Submit</button>-->
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="card-footer"></div>
+      </div>
+
+    </div>
+  </div>
+</div>

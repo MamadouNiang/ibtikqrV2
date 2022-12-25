@@ -30,6 +30,7 @@ export class AuthentificationService {
     localStorage.setItem('token', jwt);
     this.jwt = jwt;
     this.parseJWT();
+    console.log(jwt);
   }
 
 

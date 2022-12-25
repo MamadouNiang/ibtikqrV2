@@ -6,6 +6,7 @@ import {EmitType} from '@syncfusion/ej2-base';
 import {AuthentificationService} from '../../../services/config/authentification.service';
 import {ToastAnimationSettingsModel, ToastPositionModel} from '@syncfusion/ej2-angular-notifications';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {RegionsService} from '../../../services/endpoints/regions.service';
 
 @Component({
   selector: 'app-login',
@@ -45,12 +46,15 @@ export class LoginComponent implements OnInit {
   listRoles: any;
   validerFormProfil: FormGroup;
   jwt: string;
+  listRegions=[];
+  dbRegions: any;
 
   constructor(
     private authService: AuthentificationService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
+    private serviceRegions: RegionsService,
   ) {
   }
 
@@ -58,11 +62,14 @@ export class LoginComponent implements OnInit {
     console.log(this.activatedRoute.snapshot.paramMap.get('id'));
     this.cpass = false;
     this.initFormProfil();
+    this.getRegions();
+    localStorage.clear();
   }
 
   initFormProfil() {
     this.validerFormProfil = this.fb.group({
       roleName: ['', Validators.required],
+      regionId: ['', Validators.required],
     });
   }
 
@@ -74,6 +81,7 @@ export class LoginComponent implements OnInit {
     this.ejDialog.show();
   };
   selectedRole: any;
+  selectedRegion: any;
 
   async onChange(data: any) {
     console.log(data);
@@ -113,7 +121,7 @@ export class LoginComponent implements OnInit {
   async updateUser(data) {
     console.log(data);
     let res = await this.authService.updatePassword(data).toPromise();
-     return res;
+    return res;
   }
 
   async isUserActived(username) {
@@ -126,31 +134,61 @@ export class LoginComponent implements OnInit {
   }
 
   async onLogin(data: any) {
-    console.log(data);
     this.CheckCon = true;
     try {
       const res = await this.authService.login(data).toPromise();
       if (res) {
+
         localStorage.setItem('username', res['user'].username);
         this.jwt = res['accessToken'];
-        if (res['user'].roleList.length > 1) {
-          this.cpass = true;
-          localStorage.setItem('roleList', res['user'].roleList);
-          this.ejDialog2.show();
-          this.listRoles = res['user'].roleList;
-        } else {
-          setTimeout(() => {
-            this.authService.saveToken(res['accessToken']);
-            localStorage.setItem('roleName', res['user'].roleList[0]);
-            this.router.navigateByUrl('/dashbord');
-          }, 100);
+        this.cpass = true;
+        this.authService.saveToken(res['accessToken']);
+        this.listRoles = res['user'].roles;
+
+        //this.listRegions = res['user'].regionIds;
+        this.dbRegions.map(e=>{
+          res['user'].regionIds.map(el=>{
+            if (e.id===el){
+              this.listRegions.push(e)
+            }
+          })
+        })
+        if (res['user'].roles.length === 1 && res['user'].regionIds.length === 1) {
+          localStorage.setItem('roleName', res['user'].roles[0]);
+          localStorage.setItem('regions',  JSON.stringify(this.listRegions[0]));
+
+          this.router.navigateByUrl('/dashbord');
         }
+        if (res['user'].roles.length > 1 && res['user'].regionIds.length > 1) {
+          localStorage.setItem('roles', JSON.stringify(res['user'].roles));
+          localStorage.setItem('regions',  JSON.stringify(this.listRegions));
+          this.ejDialog2.show();
+        }
+
+        if (res['user'].roles.length > 1 && res['user'].regionIds.length === 1) {
+          localStorage.setItem('roles', JSON.stringify(res['user'].roles));
+          localStorage.setItem('regions', JSON.stringify(this.listRegions[0]));
+          this.ejDialog2.show();
+        }
+        if (res['user'].roles.length === 1 && res['user'].regionIds.length > 1) {
+          localStorage.setItem('roleName', res['user'].roles[0]);
+          localStorage.setItem('regions', JSON.stringify(this.listRegions));
+          this.ejDialog2.show();
+        }
+        if (res['user'].roles.length > 1 && res['user'].regionIds.length === 0) {
+          localStorage.clear();
+          this.element.show({
+            title: 'Avertissements   !', content: 'Non affecter a une region ! .', cssClass: 'e-toast-warning'
+          });
+        }
+
       }
     } catch (e) {
       this.element.show({
         title: 'Error   !', content: 'Informations Incorrectes ! .', cssClass: 'e-toast-danger'
       });
     } finally {
+
       this.CheckCon = false;
     }
   }
@@ -171,9 +209,23 @@ export class LoginComponent implements OnInit {
   validationProfil() {
     this.authService.saveToken(this.jwt);
     localStorage.setItem('roleName', this.validerFormProfil.get('roleName').value);
+    localStorage.setItem('region', this.selectedRegion);
+
     setTimeout(() => {
       this.router.navigateByUrl('/dashbord');
     }, 100);
+  }
+
+  getRegions() {
+    this.serviceRegions.regions().subscribe({
+      next: (v) => {
+        console.log(v);
+        this.dbRegions = v;
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    });
   }
 }
 

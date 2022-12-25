@@ -41,13 +41,16 @@ import {
 } from '@syncfusion/ej2-angular-charts';
 import {CampagneComponent} from './pages/modifications/campagnes/campagne.component';
 import {InterceptorService} from './services/config/interceptor.service';
-import {CommRecenssementComponent} from './pages/comm-recenssement/comm-recenssement.component';
-import {CommEvaluationComponent} from './pages/comm-evaluation/comm-evaluation.component';
+import {CommRecenssementComponent} from './pages/evaluation du marché/comm-recenssement/comm-recenssement.component';
+import {CommEvaluationComponent} from './pages/evaluation du marché/comm-evaluation/comm-evaluation.component';
 
 
 //datemodule
 import {IntrantsComponent} from './pages/modifications/intrants/intrants.component';
-import {MapDashbordComponent} from './pages/map-dashbord/map-dashbord.component';
+import {MapDashbordComponent} from './pages/dashbord/map-dashbord/map-dashbord.component';
+import { InstanceStockComponent } from './pages/dashbord/instance-stock/instance-stock.component';
+import { FicheSuiviComponent } from './pages/evaluation du marché/fiche-suivi/fiche-suivi.component';
+import { RepartitionDeStockComponent } from './pages/gestion de stock/repartition-de-stock/repartition-de-stock.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -62,6 +65,9 @@ import {MapDashbordComponent} from './pages/map-dashbord/map-dashbord.component'
     CommEvaluationComponent,
     IntrantsComponent,
     MapDashbordComponent,
+    InstanceStockComponent,
+    FicheSuiviComponent,
+    RepartitionDeStockComponent,
   ],
   imports: [
     BrowserModule,

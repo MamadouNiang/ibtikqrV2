@@ -23,3 +23,8 @@
 
 @import '../node_modules/@syncfusion/ej2-calendars/styles/bootstrap4.css';
 @import '../node_modules/@syncfusion/ej2-angular-calendars/styles/bootstrap4.css';
+@import "~leaflet/dist/leaflet.css";
+
+@import "../node_modules/bs-stepper/dist/css/bs-stepper.min.css";
+
+

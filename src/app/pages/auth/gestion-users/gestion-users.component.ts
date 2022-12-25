@@ -25,11 +25,10 @@ export class GestionUsersComponent implements OnInit {
   @ViewChild('grid') public grid: GridComponent;
   @ViewChild('grid2') public grid2: GridComponent;
   @ViewChild('grid3') public grid3: GridComponent;
+  @ViewChild('grid4') public grid4: GridComponent;
   tabMvm = {};
   toolbar: string[];
 
-  tabRefMinisteres: any;
-  tabMinisteres = {};
   tabProfils = {};
   btnValidation = false;
   tabRoles: any;
@@ -38,11 +37,14 @@ export class GestionUsersComponent implements OnInit {
   public groupOptions: GroupSettingsModel;
   public initialPage: PageSettingsModel;
   tailleSelect = 0;
-  tailleSelectMinisteres = 0;
   tailleSelectProfils = 0;
-  selectedrecords = {};
-  selectedrecordsMinisteres = {};
+  selectedrecords: any;
   selectedrecordsProfils = {};
+  selectedRegions: any;
+
+  tailleSelectRegion=0;
+  selectedrecordsRegion: object[];
+
   cpass = false;
   public position: PositionDataModel = {X: 600, Y: 200};
   public position2: PositionDataModel = {X: 420, Y: 60};
@@ -50,9 +52,11 @@ export class GestionUsersComponent implements OnInit {
   @ViewChild('ejDialog') ejDialog: DialogComponent;
   @ViewChild('ejDialog2') ejDialog2: DialogComponent;
   @ViewChild('ejDialog3') ejDialog3: DialogComponent;
+  @ViewChild('ejDialog4') ejDialog4: DialogComponent;
   @ViewChild('container', {read: ElementRef, static: true}) container: ElementRef;
   @ViewChild('container2', {read: ElementRef, static: true}) containe2r: ElementRef;
   @ViewChild('container3', {read: ElementRef, static: true}) containe3r: ElementRef;
+  @ViewChild('container4', {read: ElementRef, static: true}) containe4r: ElementRef;
   public targetElement: HTMLElement;
   public targetElement2: HTMLElement;
   public targetElement3: HTMLElement;
@@ -61,6 +65,7 @@ export class GestionUsersComponent implements OnInit {
   public defaultWidth = '452px';
   validerFormAjout: FormGroup;
   validerFormProfil: FormGroup;
+  validerFormRegion: FormGroup;
   validerFormAjoutMin: FormGroup;
   selectedRoles = [];
   selectedProfils = [];
@@ -77,6 +82,9 @@ export class GestionUsersComponent implements OnInit {
     hide: {effect: 'FadeOut', duration: 100, easing: 'linear'}
   };
   allUsers: any;
+  dropDownRoles: any;
+  tabRegions = [];
+
 
   constructor(
     private fb: FormBuilder,
@@ -92,10 +100,13 @@ export class GestionUsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.cpass = false;
+    this.getRoles();
+    this.getRegions();
     this.initFormAjout();
     this.getAllUsers();
     this.initFormAjoutMin();
     this.initFormProfil();
+    this.initFormRegions();
     this.toolbar = ['Search'];
 
   }
@@ -105,7 +116,7 @@ export class GestionUsersComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
       roles: ['', Validators.required],
-      regions: ['', Validators.required]
+      regionIds: ['', Validators.required]
     });
   }
 
@@ -121,6 +132,12 @@ export class GestionUsersComponent implements OnInit {
     });
   }
 
+  initFormRegions() {
+    this.validerFormRegion = this.fb.group({
+      ids: ['', Validators.required],
+    });
+  }
+
   onCreate(a) {
   }
 
@@ -129,37 +146,41 @@ export class GestionUsersComponent implements OnInit {
   }
 
   public onOpenDialog = (event: any): void => {
-    this.getRegions();
-    this.getRoles();
     this.cpass = true;
     this.ejDialog.show();
 
   };
-  public onOpenDialogProfils = (event: any): void => {
+
+  async onOpenDialogRegions() {
+    this.cpass = true;
+    const res = await this.tabRoles.find(({id, name}) => {
+      if (this.selectedrecords[0].regionIds.includes(id)) {
+        this.tabRegions.push({id: id, name: name});
+      }
+    });
+    this.ejDialog4.show();
+    this.grid4.refreshColumns();
+  }
+
+  public onOpenDialogProfils = (): void => {
     this.cpass = true;
     this.ejDialog3.show();
-    this.tabProfils = this.selectedrecords[0].roles;
-    const tab = [];
-    setTimeout(() => {
-      for (let i = 0; i < this.tabRoles2.length; i++) {
-        const a = this.tabRoles2[i].roleName;
-        for (let j = 0; j < Object.keys(this.tabProfils).length; j++) {
-          const b = (this.tabProfils[j].roleName);
-          if (a === b) {
-            tab.push(this.tabProfils[j].id);
-          }
-        }
-      }
-      for (let i = 0; i < this.tabRoles2.length; i++) {
-        for (let j = 0; j < tab.length; j++) {
-          if (this.tabRoles2[i].id === tab[j]) {
-            this.tabRoles2.splice(i, 1);
-          }
+    this.tabProfils = this.selectedrecords[0].roles.filter(e => {
+      return e.name;
+    });
+    this.getDropdownRoles(this.tabRoles2,this.tabProfils as Array<any>);
 
-        }
-      }
-    }, 50);
+
   };
+
+  getDropdownRoles(tabRoles2,tabProfils: Array<any>){
+  const tabProfilsArrau : Array<any> = tabProfils as Array<any>;
+    this.dropDownRoles =  tabRoles2.filter(function(o1) {
+      return !tabProfilsArrau.some(function(o2) {
+        return o1.id === o2.id;
+      });
+    });
+  }
 
   validation(e) {
     // console.log(this.cpass)
@@ -175,27 +196,31 @@ export class GestionUsersComponent implements OnInit {
     let selectedrecords: object[] = this.grid.getSelectedRecords();
     this.tailleSelect = (selectedrecords).length;
     this.selectedrecords = (selectedrecords);
+    this.tabRegions = [];
   }
 
   rowDeSelected(args: RowSelectEventArgs) {
     let selectedrecords: object[] = this.grid.getSelectedRecords();
     this.tailleSelect = (selectedrecords).length;
     this.selectedrecords = (selectedrecords);
+    this.tabRegions = [];
+
   }
 
-  rowSelectedMinistere(args: RowSelectEventArgs) {
-    let selectedrecords: object[] = this.grid2.getSelectedRecords();
-    this.tailleSelectMinisteres = (selectedrecords).length;
-    this.selectedrecordsMinisteres = (selectedrecords);
+  rowSelectedRegions($event: any) {
+    let selectedrecords: object[] = this.grid4.getSelectedRecords();
+    this.tailleSelectRegion = (selectedrecords).length;
+    this.selectedrecordsRegion = (selectedrecords);
   }
 
-  rowDeSelectedMinistere(args: RowSelectEventArgs) {
-    let selectedrecords: object[] = this.grid2.getSelectedRecords();
-    this.tailleSelectMinisteres = (selectedrecords).length;
-    this.selectedrecordsMinisteres = (selectedrecords);
+  rowDeSelectedRegions($event: any) {
+    let selectedrecords: object[] = this.grid4.getSelectedRecords();
+    this.tailleSelectRegion = (selectedrecords).length;
+    this.selectedrecordsRegion = (selectedrecords);
   }
 
   rowSelectedProfils(args: RowSelectEventArgs) {
+
     let selectedrecords: object[] = this.grid3.getSelectedRecords();
     this.tailleSelectProfils = (selectedrecords).length;
     this.selectedrecordsProfils = (selectedrecords);
@@ -238,8 +263,9 @@ export class GestionUsersComponent implements OnInit {
         id: value
       } : value
     ));
+    console.log(newVar);
     this.usersService.users(newVar).subscribe((value) => {
-      console.log(value);
+      this.getAllUsers();
       this.element.show({
         title: 'Succées   !', content: 'Utilisateur ajouté avec succée', cssClass: 'e-toast-success'
       });
@@ -253,13 +279,132 @@ export class GestionUsersComponent implements OnInit {
 
   getAllUsers() {
     this.usersService.getAllUsers().subscribe((value) => {
-      console.log(value);
       this.initFormAjout();
       this.allUsers = value;
+      setTimeout(()=>{
+        this.tailleSelectProfils = 0;
+        this.tailleSelectRegion = 0;
+        this.tailleSelect = 0;
+      },500)
     }, (error) => {
       this.element.show({
         title: 'ERREUR   !', content: 'Veillez recommencer', cssClass: 'e-toast-danger'
-      });
+      })
     });
+  }
+
+  onActived() {
+    let a = [];
+    let b = [];
+    this.selectedrecords.filter(e => {
+      e.isActive ? b.push(e.id) : a.push(e.id);
+    });
+    if (a.length > 0) {
+      this.activateUsers(a);
+    }
+    if (b.length > 0) {
+      this.desactivateUsers(b);
+    }
+
+  }
+
+  desactivateUsers(b: any[]) {
+    this.usersService.deactivates(b).subscribe((value) => {
+      this.getAllUsers();
+      setTimeout(() => {
+        this.tailleSelect = 0;
+      }, 100);
+    }, (error) => {
+      console.log((error));
+    });
+  }
+
+  activateUsers(a: any[]) {
+    this.usersService.activate(a).subscribe((value) => {
+      this.getAllUsers();
+
+      setTimeout(() => {
+        this.tailleSelect = 0;
+      }, 100);
+    }, (error) => {
+      console.log((error));
+    });
+  }
+
+  validerModifProfil() {
+    const tabOfIdsRoles = this.selectedProfils.map(e=>{
+       return Number(e);
+    })
+    this.usersService.updateRoleToUser(this.selectedrecords[0].id,tabOfIdsRoles).subscribe((value)=>{
+      console.log(value);
+      this.getAllUsers();
+      this.initFormProfil();
+      this.ejDialog3.hide();
+    },(error)=>{
+      console.log(error);
+    })
+  }
+
+  deleteRolesInProfil() {
+    const tabOfIdsRoles = (this.selectedrecordsProfils as Array<any>).map(e=>{
+      return Number(e.id);
+    });
+
+    this.usersService.deleteRoleToUser(this.selectedrecords[0].id,tabOfIdsRoles).subscribe((value)=>{
+      this.getAllUsers();
+      this.initFormProfil();
+      this.element.show({
+        title: 'Succées   !', content: 'Profil(s) ajouté avec succée', cssClass: 'e-toast-success'
+      });
+    },(error)=>{
+      console.log(error);
+      this.element.show({
+        title: 'ERREUR   !', content: 'Veillez recommencer', cssClass: 'e-toast-danger'
+      });
+    },()=>{
+      this.ejDialog3.hide();
+    })
+  }
+
+  validerModiRegions() {
+    this.usersService.updateRegionsToUser(this.selectedrecords[0].id,this.selectedrecordsRegion).subscribe((value)=>{
+      this.getAllUsers();
+      this.element.show({
+        title: 'Succées   !', content: 'Region(s) ajouté avec succée', cssClass: 'e-toast-success'
+      });
+      this.initFormRegions();
+      this.ejDialog4.hide();
+
+    },(error)=>{
+      console.log(error);
+      this.element.show({
+        title: 'ERREUR   !', content: 'Veillez recommencer', cssClass: 'e-toast-danger'
+      });
+    },()=>{
+    })
+  }
+
+
+  deleteRegions() {
+    console.log(this.selectedrecordsRegion)
+    const tabOfIdsRoles = this.selectedrecordsRegion.map(e=>{
+      return e['id'];
+    });
+    this.usersService.removeRegionsToUser(this.selectedrecords[0].id,tabOfIdsRoles).subscribe((value)=>{
+      this.getAllUsers();
+      this.element.show({
+        title: 'Succées   !', content: 'Region(s) suprrimé avec succée', cssClass: 'e-toast-success'
+      });
+      this.initFormRegions();
+
+    },(error)=>{
+      console.log(error);
+      this.element.show({
+        title: 'ERREUR   !', content: 'Veillez recommencer', cssClass: 'e-toast-danger'
+      });
+    },()=>{
+      this.ejDialog4.hide();
+
+    })
   }
 }

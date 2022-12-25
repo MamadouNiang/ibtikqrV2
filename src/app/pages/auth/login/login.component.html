@@ -146,8 +146,24 @@
           formControlName="roleName"
           placeholder="Selectionner un profil"
         >
-          <ng-option *ngFor="let codeService of listRoles  " value="{{codeService}}">
-            {{codeService}}
+          <ng-option *ngFor="let codeService of listRoles  " value="{{codeService.name}}">
+            {{codeService.id}} -- {{codeService.name}}
+          </ng-option>
+        </ng-select>
+        <br>
+        <ng-select
+          [(ngModel)]="selectedRegion"
+          [clearable]="true"
+          [searchable]="true"
+          appearance="outline"
+          appendTo="body"
+          bindLabel="name"
+          class="custom-class"
+          formControlName="regionId"
+          placeholder="Selectionner une region"
+        >
+          <ng-option *ngFor="let region of listRegions  " value="{{region.name}}">
+            {{region.id}} --  {{region.name}}
           </ng-option>
         </ng-select>
         <br>

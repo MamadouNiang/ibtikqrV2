@@ -29,6 +29,8 @@ export class ThemeNavSidebarComponent implements OnInit{
 
   validerFormProfil: FormGroup;
   listRoles: any;
+  listRegions: Array<any>;
+  region: string;
 
   constructor(
     private authServ: AuthentificationService,
@@ -45,12 +47,13 @@ export class ThemeNavSidebarComponent implements OnInit{
   initFormProfil() {
     this.validerFormProfil = this.fb.group({
       roleName: ["", Validators.required],
+      regionId: ["", Validators.required],
     });
   }
   logOut(){
     localStorage.removeItem('token');
     localStorage.removeItem('roleName');
-    localStorage.removeItem('roleList');
+    localStorage.removeItem('roles');
     localStorage.clear();
     setTimeout(()=>{
       this.authServ.logout();
@@ -61,13 +64,21 @@ export class ThemeNavSidebarComponent implements OnInit{
     let jwtHelper = new JwtHelperService();
 
     if (localStorage.getItem('token') != null) {
-      let arr: Array<string> = localStorage.getItem('roleList').split(",");
-      this.listRoles=arr;
+      const data = JSON.parse(localStorage.getItem('roles'));
+      const listeRegions = JSON.parse(localStorage.getItem('regions'));
+      const ob = data.map((e)=>{
+        return e.name;
+      })
+      this.listRoles = ob;
+      this.listRegions = listeRegions;
+
     }
 
     if (localStorage.getItem('roleName') != null){
       let objJWT =localStorage.getItem('roleName');
+      let region =localStorage.getItem('region');
       this.roles=objJWT;
+      this.region=region;
       if(objJWT!=null){
         return true;
       }else{
@@ -77,17 +88,18 @@ export class ThemeNavSidebarComponent implements OnInit{
       return false;
     }
   }
+
   isAdmin(){
-    return this.roles.indexOf('ROLE_ADMINISTRATOR')>=0
+    return this.roles.indexOf('ADMINISTRATOR')>=0
   }
   isCommission(){
-    return this.roles.indexOf('ROLE_COMMISSION')>=0
+    return this.roles.indexOf('COMMISSION')>=0
   }
   isAgriculteur(){
-    return this.roles.indexOf('ROLE_FARMER')>=0
+    return this.roles.indexOf('FARMER')>=0
   }
   isDelegue(){
-    return this.roles.indexOf('ROLE_DELEGATE')>=0
+    return this.roles.indexOf('DELEGATE')>=0
   }
   // isVALIDATION2(){
   //   return this.roles.indexOf('VALIDATION2')>=0
@@ -125,9 +137,11 @@ export class ThemeNavSidebarComponent implements OnInit{
   //   document.body.appendChild(div);
   // }
   selectedRole: any;
+  selectedRegion: any;
 
   changeProfil() {
     this.cpass = true;
+
     this.ejDialog.show();
   }
   validation(e) {
@@ -141,7 +155,9 @@ export class ThemeNavSidebarComponent implements OnInit{
   }
   validationProfil(){
     localStorage.setItem("roleName",this.validerFormProfil.get("roleName").value);
+    localStorage.setItem("region",this.validerFormProfil.get("regionId").value);
     this.ejDialog.hide();
     this.router.navigateByUrl("/dashbord");
+    this.initFormProfil();
   }
 }

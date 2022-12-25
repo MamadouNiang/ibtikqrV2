@@ -123,7 +123,7 @@ export class DashbordComponent implements OnInit {
     this.estimationService.estimations().pipe(map(data => {
       const d = [];
       (data as Array<any>).forEach(el => {
-        console.log(el);
+        // console.log(el);
         el.agriculturalInputs.forEach(e => {
           e['agId'] = e['id'];
           delete e['id'];
@@ -138,11 +138,11 @@ export class DashbordComponent implements OnInit {
           this.allCamp = value;
           for (const allDataGraphElement of this.allDataGraph) {
             if (allDataGraphElement.type === 'KG') {
-              this.tooltipV = {format: '${point.x} : <b>${point.y} Kg</b>'}
+              this.tooltipV = {format: '${point.x} : <b>${point.y} Kg</b>'};
               this.dataA = [...this.dataA, allDataGraphElement];
 
             } else {
-              this.tooltipNv = {format: '${point.x} : <b>${point.y} L</b>'}
+              this.tooltipNv = {format: '${point.x} : <b>${point.y} L</b>'};
               this.dataS = [...this.dataS, allDataGraphElement];
             }
           }

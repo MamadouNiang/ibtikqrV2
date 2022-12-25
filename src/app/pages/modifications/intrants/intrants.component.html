@@ -10,6 +10,7 @@
                     class="mt-3"
                     header="Ajout d'un Intrant Agricole" id='dialog'
                     isModal='true'
+                    allowDragging='true'
                     showCloseIcon='true' width='560px'>
           <ng-template #content>
             <div class="dialogContent">
@@ -203,7 +204,7 @@
 
         <ejs-dialog (beforeOpen)="validation($event)" class="mt-3" id='dialogDetail' isModal='true'
                     [position]='IntrantDetail' #ejDialogDetail header="Detail de l'intrant :{{userDetailCodeIntrant}}"
-                    showCloseIcon='true'
+                    showCloseIcon='true'  allowDragging='true'
                     [target]='targetElement' width='560px'>
           <ng-template #content>
             <div class="dialogContent">
@@ -288,6 +289,7 @@
                     [position]='IntrantModification' #ejDialogModification
                     header="Modification de l'intrant :{{userDetailCodeModification}}"
                     showCloseIcon='true'
+                    allowDragging='true'
                     [target]='targetElement' width='560px'>
           <ng-template #content>
             <div class="dialogContent">

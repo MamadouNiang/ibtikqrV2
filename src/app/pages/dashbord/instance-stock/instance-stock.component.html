@@ -1,0 +1,194 @@
+<div class="row " *ngIf="rolename==='ADMINISTRATOR'">
+  <div class="col-md-11 ml-5  card card-outline card-primary">
+    <div class="card-header">
+      <h5 class="card-title">Instance de subvention</h5>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+      </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <div class="row mb-5">
+        <div class="col-sm-6">
+          <ejs-accumulationchart [title]="titleV" #pie [legendSettings]="legendSettingsV" [tooltip]="tooltipV"
+                                 (load)='loadValider($event)' [enableSmartLabels]='enableSmartLabels'
+                                 [enableAnimation]='enableAnimation' useGroupingSeparator='true'>
+            <e-accumulation-series-collection>
+              <e-accumulation-series name='Engrais' [dataSource]='dataA' xName='x' yName='y'
+                                     [startAngle]="startAngleV" [endAngle]="endAngleV" innerRadius="40%"
+                                     radius="70%" [dataLabel]="dataLabelV" explode=true
+                                     explodeOffset='10%' [explodeIndex]='3' [radius]='radius'>
+              </e-accumulation-series>
+            </e-accumulation-series-collection>
+          </ejs-accumulationchart>
+
+        </div>
+        <div class="col-sm-6">
+          <ejs-accumulationchart [title]="titleNv" #pie2 [legendSettings]="legendSettingsN" [tooltip]="tooltipNv"
+                                 (load)='loadNonValider($event)' [enableSmartLabels]='enableSmartLabels'
+                                 [enableAnimation]='enableAnimation'>
+            <e-accumulation-series-collection>
+              <e-accumulation-series name='Herbicides' [dataSource]='dataS' xName='x' yName='y'
+                                     [startAngle]="startAngleNv"
+                                     [endAngle]="endAngleNv" innerRadius="40%"
+                                     radius="70%" [dataLabel]="dataLabelN" explode=true explodeOffset='10%'
+                                     [explodeIndex]='3' [radius]='radius'>
+              </e-accumulation-series>
+            </e-accumulation-series-collection>
+          </ejs-accumulationchart>
+        </div>
+      </div>
+      <hr>
+      <div class="row mb-5">
+        <div class="col-md-12">
+          <ejs-grid
+            #grid
+            [allowSelection]="true"
+            [dataSource]='allCamp'
+            [groupSettings]='groupOptions'
+            [allowGrouping]='true'
+            id="gridcomp" allowSorting='true'
+            height=360
+            gridLines="Both"
+
+          >
+            <e-columns>
+              <e-column field='code' headerText='Campagne' textAlign='Left' width=140>
+                <ng-template #template let-data>
+                  {{data.code}}
+                </ng-template>
+              </e-column>
+              <e-column field='name' headerText='Subventions' textAlign='Center' width=150>
+                <ng-template #template let-data>
+                  {{data.name }}
+                </ng-template>
+              </e-column>
+              <e-column field='quantity' headerText="Quantitée Entrée" textAlign='Center' width=120>
+                <ng-template #template let-data>
+                  {{(data.quantity).toLocaleString()}}
+                </ng-template>
+              </e-column>
+              <e-column field='unit' headerText="Unité" textAlign='Center' width=80>
+                <ng-template #template let-data>
+                  {{data.unit}}
+                </ng-template>
+              </e-column>
+              <e-column field='unitCost' headerText='Prix (MRU)' textAlign='Center' width=90>
+                <ng-template #template let-data>
+                  {{(data.unitCost).toLocaleString()}}
+                </ng-template>
+              </e-column>
+              <e-column field='intrantTotal' headerText='Total' textAlign='Center' width=90>
+                <ng-template #template let-data>
+                  {{((data.intrantTotal)).toLocaleString()}}
+                </ng-template>
+              </e-column>
+              <e-column field='quantity' headerText="Quantitée Sortie" textAlign='Center' width=120>
+                <ng-template #template let-data>
+                  {{(data.quantity).toLocaleString()}}
+                </ng-template>
+              </e-column>
+              <e-column field='totalCost' headerText='Total Sorti' textAlign='Center' width=90>
+                <ng-template #template let-data>
+                  {{((data.quantity) * (data.unitCost)).toLocaleString()}}
+                </ng-template>
+              </e-column>
+            </e-columns>
+            <e-aggregates>
+              <e-aggregate>
+                <e-columns>
+                  <e-column field="quantity" type="sum">
+                    <ng-template #groupFooterTemplate let-data>{{data.sum.toLocaleString()}} </ng-template>
+                  </e-column>
+                  <e-column field="unit" type="max">
+                    <ng-template #groupFooterTemplate let-data>{{data.max.toLocaleString()}} </ng-template>
+                  </e-column>
+                  <e-column field='intrantTotal' type="sum">
+                    <ng-template #groupFooterTemplate let-data>
+                      {{(data.sum).toLocaleString() }}
+                    </ng-template>
+                  </e-column>
+                  <e-column field='intrantTotal' type="sum">
+                    <ng-template #footerTemplate let-data>
+                      {{(data.sum).toLocaleString()}}
+                    </ng-template>
+                  </e-column>
+                  <e-column field="unitCost" type="sum">
+                    <ng-template #groupFooterTemplate let-data>{{data.sum.toLocaleString()}}  </ng-template>
+                  </e-column>
+                </e-columns>
+              </e-aggregate>
+            </e-aggregates>
+          </ejs-grid>
+        </div>
+      </div>
+
+      <!--            <div class="row" *ngIf="roles.indexOf('ADMINISTRATEUR')>=0">-->
+      <!--              <div class="col-md-4 ml-3 card card-outline card-primary">-->
+      <!--                <div class="card-header">-->
+      <!--                  <h5 class="card-title">Instance utilisateurs</h5>-->
+      <!--                  <div class="card-tools">-->
+      <!--                    <button type="button" class="btn btn-tool" data-card-widget="collapse">-->
+      <!--                      <i class="fas fa-minus"></i>-->
+      <!--                    </button>-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--                <div class="card-body">-->
+      <!--                  <div  class="col-md-12">-->
+      <!--                    <p class="text-center">-->
+      <!--                      <strong>Utilisateurs ({{dashUsers[2]}}/{{dashUsers[0]}}) <b style="color: #e60000">Inactif(s)</b></strong>-->
+      <!--                    </p>-->
+
+      <!--                    &lt;!&ndash; /.progress-group &ndash;&gt;-->
+      <!--                    <div class="progress-group">-->
+      <!--                      ADMINISTRATEUR-->
+      <!--                      <span class="float-right"><b>{{dashUsers[3]}}</b>/{{dashUsers[0]}}</span>-->
+      <!--                      <div class="progress progress-sm">-->
+      <!--                        <div class="progress-bar bg-primary " id="padmin" ></div>-->
+      <!--                      </div>-->
+      <!--                    </div>-->
+      <!--                    <div class="progress-group">-->
+      <!--                      EDITION-->
+      <!--                      <span class="float-right"><b>{{dashUsers[6]}}</b>/{{dashUsers[0]}}</span>-->
+      <!--                      <div class="progress progress-sm">-->
+      <!--                        <div class="progress-bar bg-primary" id="pedition"></div>-->
+      <!--                      </div>-->
+      <!--                    </div>-->
+      <!--                    &lt;!&ndash; /.progress-group &ndash;&gt;-->
+
+      <!--                    <div class="progress-group">-->
+      <!--                      SAISIE-->
+      <!--                      <span class="float-right"><b>{{dashUsers[4]}}</b>/{{dashUsers[0]}}</span>-->
+      <!--                      <div class="progress progress-sm">-->
+      <!--                        <div class="progress-bar bg-danger" id="psaisie"></div>-->
+      <!--                      </div>-->
+      <!--                    </div>-->
+
+      <!--                    &lt;!&ndash; /.progress-group &ndash;&gt;-->
+      <!--                    <div class="progress-group">-->
+      <!--                      <span class="progress-text">CONSULTATION</span>-->
+      <!--                      <span class="float-right"><b>{{dashUsers[5]}}</b>/{{dashUsers[0]}}</span>-->
+      <!--                      <div class="progress progress-sm">-->
+      <!--                        <div class="progress-bar bg-success" id="pcons"></div>-->
+      <!--                      </div>-->
+      <!--                    </div>-->
+
+      <!--                    &lt;!&ndash; /.progress-group &ndash;&gt;-->
+      <!--                    <div class="progress-group">-->
+      <!--                      SUPER UTILISATEUR-->
+      <!--                      <span class="float-right"><b>{{dashUsers[7]}}</b>/{{dashUsers[0]}}</span>-->
+      <!--                      <div class="progress progress-sm">-->
+      <!--                        <div class="progress-bar bg-warning" id="psuper"></div>-->
+      <!--                      </div>-->
+      <!--                    </div>-->
+      <!--                    &lt;!&ndash; /.progress-group &ndash;&gt;-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--              </div>-->
+
+      <!--            </div>-->
+    </div>
+  </div>
+</div>

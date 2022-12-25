@@ -1,0 +1,51 @@
+<ejs-toast #element (created)="onCreate($event)" [position]='position' [animation]="animation"></ejs-toast>
+
+<div class="row">
+  <div class="col-md-12 card card-outline card-primary">
+    <div class="card-header">
+      <h5 class="card-title font-weight-bold">Zone de subvention</h5>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 ">
+          <div class="map-wrapper">
+            <div class="map-border">
+              <div id="map"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 ">
+          <ejs-grid #grid
+                    [toolbar]='toolbar'
+                    [dataSource]='dateStaticalSheetByRegion'
+                    id="gridcomp"
+                    height=500
+                    gridLines="Both"
+          >
+            <e-columns>
+              <e-column field='farmerNNI' headerText='NNI' textAlign='Center' width=89></e-column>
+              <e-column field='farmerFirstName' field='farmerLastName' headerText='Nom et prenom' textAlign='Left' width=160>
+                <ng-template #template let-data>
+                  {{data.farmerFirstName }} {{data.farmerLastName }}
+                </ng-template>
+              </e-column>
+              <e-column field='agriculturalInputs' headerText='Subvention' textAlign='Left' width=160>
+                <ng-template #template let-data >
+                  <tr *ngFor="let e of data.agriculturalInputs ;let i = index;">
+                    <td >{{i+1}}: {{e.name }} : {{ e.unitCost }} {{ e.unit}}</td>
+                  </tr>
+
+                </ng-template>
+              </e-column>
+            </e-columns>
+          </ejs-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
