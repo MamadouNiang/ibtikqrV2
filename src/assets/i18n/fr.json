@@ -1,0 +1,12 @@
+{
+  "global": {
+    "lang": {
+      "language": "Langue",
+      "french":  "Français",
+      "arabic": "Arabe"
+    }
+  },
+  "navbar" : {
+
+  }
+}

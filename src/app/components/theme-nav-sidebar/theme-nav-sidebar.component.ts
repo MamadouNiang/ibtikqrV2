@@ -6,6 +6,7 @@ import {PositionDataModel} from '@syncfusion/ej2-angular-popups';
 import {DialogComponent} from '@syncfusion/ej2-angular-popups/src/dialog/dialog.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-theme-nav-sidebar',
@@ -37,6 +38,7 @@ export class ThemeNavSidebarComponent implements OnInit{
     public loaderService: LoaderService,
     private fb: FormBuilder,
     private router: Router,
+    private translate: TranslateService
   ) {
 
   }
@@ -159,5 +161,10 @@ export class ThemeNavSidebarComponent implements OnInit{
     this.ejDialog.hide();
     this.router.navigateByUrl("/dashbord");
     this.initFormProfil();
+  }
+
+  getSelectedLang(selectedLang: string){
+    console.log("event :", selectedLang);
+    this.translate.use(selectedLang);
   }
 }

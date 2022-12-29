@@ -80,6 +80,19 @@
     </ul>
 
     <ul *ngIf="isAuthenticated()" class="navbar-nav ml-auto">
+      <div class="dropdown">
+        <select #teams  (change)="getSelectedLang(teams.value)"
+                class="form-control form-control-sm">
+          <option selected disabled value="">{{ 'global.lang.language' | translate }}
+          </option>
+          <option value="fr">
+            {{ 'global.lang.french' | translate}}
+          </option>
+          <option value="ar">
+            {{ 'global.lang.arabic' | translate}}
+          </option>
+        </select>
+      </div>
       <li class="nav-item ">
         <button (click)="logOut()" style="background: white;border: none">
           <i class="fas fa-sign-out-alt" style="color: red!important;font-size: x-large"></i>
