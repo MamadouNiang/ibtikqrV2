@@ -48,7 +48,7 @@ export class RepartitionDeStockComponent implements OnInit {
 
   selectedCampagne: any;
   dataSourceChild: any;
-  keyIntrant: { id: any; name: any; };
+  keyIntrant: { id: null; name: null; };
 
   constructor(private estimationService: EstimationService, private fb: FormBuilder, private stockService: StockService,
   ) {
@@ -163,9 +163,12 @@ export class RepartitionDeStockComponent implements OnInit {
         }
       })
     })
-    this.detailgridChild.dataSource = maVar;
-    console.log(this.detailgridChild.dataSource);
-    console.log(this.keyIntrant);
+    if (this.detailgridChild!=undefined){
+      this.detailgridChild.dataSource = maVar;
+      console.log(this.detailgridChild);
+      console.log(this.keyIntrant);
+    }
+
     // .validerFormregion.get('idRegion').value;
     // const id = this.validerFormregion.get('idRegion').value;
     // const row  = args.data;
