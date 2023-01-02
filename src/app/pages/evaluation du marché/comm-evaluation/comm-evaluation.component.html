@@ -22,13 +22,13 @@
           </form>
         </div>
         <div class="col-sm-1 ">
-          <button [disabled]="tailleSelect===undefined || tailleSelect===null || tailleSelect===0 " type="button"
+          <button (click)="validerStaticalSheet()"  [disabled]="tailleSelect===undefined || tailleSelect===null || tailleSelect===0 " type="button"
                   class="btn btn-sm btn-success ">
             <i class="bi bi-check"></i> Valider({{tailleSelect}})
           </button>
         </div>
         <div class="col-sm-1" style="margin-left: 1%;">
-          <button [disabled]="tailleSelect===undefined || tailleSelect===null || tailleSelect===0 " type="button"
+          <button (click)="rejeterStaticalSheet()" [disabled]="tailleSelect===undefined || tailleSelect===null || tailleSelect===0 " type="button"
                   class=" btn btn-sm btn-danger ">
             <i class="bi bi-check"></i>Rejeter ({{tailleSelect}})
           </button>
@@ -50,7 +50,8 @@
                 (rowDeselected)="rowDeSelected($event)"
                 [dataSource]='dateStaticalSheetByRegion'
                 (rowDataBound)="rowDataBound($event)"
-
+                [allowFiltering]='true'
+                [filterSettings]='filterOptions'
                 id="gridcomp" allowSorting='true'
                 height=360
                 gridLines="Both"
@@ -72,16 +73,22 @@
 
                     </ng-template>
                   </e-column>
-                  <e-column field='isArchived' headerText='Etat' textAlign='Center' width=90>
-                    <ng-template #template let-data>
-                      <div *ngIf="data.isArchived;else login" class="statustemp e-activecolor">
+                  <e-column  field='status' headerText='Etat' textAlign='Center' width=90>
+
+                    <ng-template  #template let-data>
+                      <div *ngIf="data.status==='DELEGATE_REJECTED'">
+                        <div  class="statustemp e-warningactivecolor font-weight-bold">
+                          <span  class="statustxt e-warningactivecolor"> Rejeter</span>
+                        </div>
+                      </div>
+                      <div *ngIf="data.status==='PENDING'">
+                        <div class="statustemp e-inactivecolor font-weight-bold">
+                          <span class="statustxt e-inactivecolor">En attente</span>
+                        </div>
+                      </div>
+                      <div *ngIf="data.status==='DELEGATE_VALIDATED'" class="statustemp e-activecolor font-weight-bold">
                         <span class="statustxt e-activecolor">  Validé</span>
                       </div>
-                      <ng-template #login>
-                        <div class="statustemp e-inactivecolor">
-                          <span class="statustxt e-inactivecolor"> en attente</span>
-                        </div>
-                      </ng-template>
                     </ng-template>
                   </e-column>
                 </e-columns>

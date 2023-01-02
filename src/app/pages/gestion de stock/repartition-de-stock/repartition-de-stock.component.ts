@@ -80,7 +80,6 @@ export class RepartitionDeStockComponent implements OnInit {
     const reg = (JSON.parse(localStorage.getItem('regions')).filter((e, id) => e.name === localStorage.getItem('region')));
     this.region = reg[0];
     this.regionsForm();
-    console.log(this.region.id);
     this.checkRegionStaticalSheet(this.region.id);
   }
 
@@ -88,7 +87,6 @@ export class RepartitionDeStockComponent implements OnInit {
     try {
       const resp = await this.estimationService.estimations().toPromise();
       this.campagnes = resp;
-
     } catch (e) {
       console.log(e);
       this.element.show({
@@ -104,13 +102,12 @@ export class RepartitionDeStockComponent implements OnInit {
   checkRegionStaticalSheet(idRegion: any) {
     this.stockService.getStockByRegionId(idRegion).subscribe({
       next: (value) => {
+        console.log(value);
         let s  = 0;
         value.filter(e=>{
           s = s + e.campaign.totalCost;
           Object.assign(e, {totalCamp: s})
         })
-        console.log(value);
-
         this.data = value;
       },
       error: (error) => {
@@ -139,6 +136,7 @@ export class RepartitionDeStockComponent implements OnInit {
   }
 
   changeReion(){
+    this.keyIntrant = null;
     this.checkRegionStaticalSheet(Number(this.validerFormregion.get('idRegion').value));
 
   }
@@ -165,14 +163,6 @@ export class RepartitionDeStockComponent implements OnInit {
     })
     if (this.detailgridChild!=undefined){
       this.detailgridChild.dataSource = maVar;
-      console.log(this.detailgridChild);
-      console.log(this.keyIntrant);
     }
-
-    // .validerFormregion.get('idRegion').value;
-    // const id = this.validerFormregion.get('idRegion').value;
-    // const row  = args.data;
-    // console.log();
-    // this.detailgridChild.dataSource = row['statisticalSheetsByRegion'][id];
   }
 }

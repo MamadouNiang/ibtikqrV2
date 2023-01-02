@@ -29,6 +29,7 @@ import {
   SortService,
   ToolbarService
 } from '@syncfusion/ej2-angular-grids';
+
 import {ToastModule} from '@syncfusion/ej2-angular-notifications';
 import {LoginComponent} from './pages/auth/login/login.component';
 
