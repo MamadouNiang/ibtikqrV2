@@ -132,6 +132,14 @@
               </p>
             </a>
           </li>
+          <li *ngIf="isAdmin()" class="nav-item">
+            <a class="nav-link" routerLink="stock">
+              <i class="nav-icon fas fa-box"></i>
+              <p>
+                Stock & Consommations
+              </p>
+            </a>
+          </li>
           <li *ngIf="isAdmin() || isCommission() " class="nav-header">CAMPAGNES AGRICOLES</li>
           <li *ngIf="isAdmin() || isCommission() " class="nav-item">
             <a class="nav-link" routerLink="intrants">
