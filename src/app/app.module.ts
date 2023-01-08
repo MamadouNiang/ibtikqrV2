@@ -19,6 +19,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {
   AggregateService,
   ColumnMenuService,
+  DetailRowService,
   EditService,
   FilterService,
   GridModule,
@@ -102,6 +103,7 @@ import { StockGlobalComponent } from './pages/gestion de stock/stock-global/stoc
     GroupService,
     SortService,
     PageService,
+    DetailRowService,
     ToolbarService,
     EditService,
     ToolbarService,

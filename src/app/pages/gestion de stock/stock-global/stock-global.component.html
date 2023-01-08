@@ -1,7 +1,99 @@
 <div class="content-wrapper text-sm">
-<div class="content-header">
-  <div class="container-fluid">
-    <p>stock-global works!</p>
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <ejs-grid #grid [dataSource]='data'
+                    [allowGrouping]='true' [groupSettings]='groupOptions'
+                    (dataBound)='dataBound()'
+                    (excelQueryCellInfo)="excelQueryCellInfo($event)"
+                    [aggregates]='aggregates'
+                    [toolbar]='toolbar' (toolbarClick)='toolbarClick($event)'
+                    [allowExcelExport]='true' [allowPdfExport]='true'
+          >
+            <e-columns>
+              <e-column field="campagne" headerText='Campagne' width=30>
+                <ng-template #template let-data>
+                  {{data.campagne}}
+                </ng-template>
+              </e-column>
+              <e-column field="regionName" headerText='Region' width=50 textAlign="center">
+                <ng-template #template let-data>
+                  {{data.regionName  }}
+                </ng-template>
+              </e-column>
+              <e-column field="farmerFirstName" headerText='Agriculteur' textAlign="center" width=50>
+                <ng-template #template let-data>
+                  {{data.farmerFirstName  }}
+                </ng-template>
+              </e-column>
+              <e-column field="intrantName" headerText='Intrant ' textAlign="center" width=50>
+                <ng-template #template let-data>
+                  {{data.intrantName  }}
+                </ng-template>
+              </e-column>
+              <e-column field="quantityConso" headerText='Quantité sortie' textAlign="center" width=50>
+                <ng-template #template let-data>
+                  {{data.quantityConso  }}
+                </ng-template>
+              </e-column>
+              <e-column field="unit" headerText='Unité' textAlign="center" width=50>
+                <ng-template #template let-data>
+                  {{data.unit  }}
+                </ng-template>
+              </e-column>
+              <e-column field="unitCost" headerText='unitCost' textAlign="center" width=50>
+                <ng-template #template let-data>
+                  {{data.unitCost  }}
+                </ng-template>
+              </e-column>
+              <e-column field="montantConso" headerText='montantConso' textAlign="center" width=50>
+                <ng-template #template let-data>
+                  {{data.montantConso.toLocaleString()  }}
+                </ng-template>
+              </e-column>
+            </e-columns>
+
+            <e-aggregates>
+              <e-aggregate>
+                <e-columns>
+                                    <e-column field="quantityConso" type="sum">
+                                      <ng-template #groupFooterTemplate  let-data>
+                                        {{data.sum.toLocaleString()}} </ng-template>
+                                    </e-column>
+                  <e-column field="quantityConso" type="sum">
+                    <ng-template #groupCaptionTemplate let-data>
+                      {{data.sum.toLocaleString()}} </ng-template>
+                  </e-column>
+                  <e-column field="montantConso" type="sum">
+                    <ng-template #groupCaptionTemplate let-data>
+                      <div class="text-success text-bold">{{data.sum.toLocaleString()}}</div>
+                    </ng-template>
+                  </e-column>
+                  <e-column field="montantConso" type="sum">
+                    <ng-template #groupFooterTemplate let-data>
+                      <div class="text-success text-bold">{{data.sum.toLocaleString()}}</div>
+                    </ng-template>
+                  </e-column>
+                </e-columns>
+              </e-aggregate>
+            </e-aggregates>
+
+            <!--            group template pour attirer le group by -->
+            <!--            <ng-template #groupSettingsCaptionTemplate let-data>-->
+            <!--              <span *ngIf="data.key.startsWith('CA');else intrant"-->
+            <!--                    class='groupItems font-weight-bold text-bold text-blue'> Campagne : </span>-->
+            <!--              <ng-template #intrant>-->
+            <!--                <span class='groupItems font-weight-bold text-bold text-blue'-->
+            <!--                      style='color:rgba(255,0,0,0.6)'> Region : </span>-->
+            <!--              </ng-template>-->
+            <!--              <span class='groupHeader text-bold text-cyan' style='color:blue'>{{data | json}}</span>-->
+            <!--            </ng-template>-->
+          </ejs-grid>
+        </div>
+      </div>
+
+
+    </div>
   </div>
-</div>
 </div>
