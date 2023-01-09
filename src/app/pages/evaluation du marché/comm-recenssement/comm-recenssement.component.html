@@ -4,11 +4,11 @@
   <div class="content-header">
     <div class="container-fluid">
       <div class="row mt-2">
-        <div class="col-sm-4"><h5 class="m-0 text-dark">Import Recensement ({{region}})</h5></div>
+        <div class="col-sm-4"><h5 class="m-0 text-dark">{{'recensement.import_recensement'|translate}} ({{region | translate}})</h5></div>
         <div class="col-sm-3">
           <div>
             <div role="alert " style="text-align: center">
-              <p style="color: #001cab;font-size: small;"><strong> Télécharger le canevas </strong>
+              <p style="color: #001cab;font-size: small;"><strong>{{'recensement.telecharger'|translate}}</strong>
                 <a (click)="exportCanvas()">
                   <button class="btn fas fa-download mb-1"
                           style="outline: none;color: #001cab;font-size: small;"></button>
@@ -21,7 +21,7 @@
         <div class="col-sm-3 ">
           <form [formGroup]="validerFormCampagne" >
             <select formControlName="idCamp"  class="form-control form-control-sm">
-              <option selected  disabled value="">-- selectionner une campagne --
+              <option selected  disabled value="">-- {{'recensement.select'|translate}} --
               </option>
               <option  *ngFor="let ca of campagnes" value="{{ca.id}}">
                 {{ca.code}}
@@ -32,7 +32,7 @@
         <div class="col-sm-1">
           <button [disabled]="validerFormCampagne.invalid " class="btn btn-sm btn-info">
             <label style="margin-bottom: 0;">
-              <span class="mdi mdi-file-export- "><i class="fas fa-cloud-upload-alt nav-icon"></i>  Import </span>
+              <span class="mdi mdi-file-export- "><i class="fas fa-cloud-upload-alt nav-icon"></i>{{'recensement.import'|translate}}</span>
               <input  [disabled]="validerFormCampagne.invalid " class="custom-file-input" type="file"  #fileInput (click)="fileInput.value = null" value=""
                      hidden accept=".xlsx, .xls, .csv" (change)="importCsv($event)">
             </label>
@@ -41,7 +41,7 @@
         <div class="col-sm-1">
           <button (click)="validerImp()" class="btn btn-sm btn-success ml-2"
           >
-            <span> <i class="fas fa-check"> </i> Valider </span>
+            <span> <i class="fas fa-check"> </i>{{'recensement.valider'|translate}}</span>
           </button>
         </div>
         <!--        <div class="col-sm-4">-->
@@ -74,13 +74,13 @@
                 height=360
                 gridLines="Both">
         <e-columns>
-          <e-column field='nni' headerText='CIN' textAlign='Left' width=90></e-column>
+          <e-column field='nni' headerText="{{'recensement.cin'|translate}}" textAlign='Left' width=90></e-column>
           <e-column field='nom' field='prenom' headerText='Utilisateur' textAlign='Left' width=110>
             <ng-template #template let-data>
               {{data.prenom}} {{data.nom}}
             </ng-template>
           </e-column>
-          <e-column field='superficie' headerText='Superficie' textAlign='Left' width=80></e-column>
+          <e-column field='superficie' headerText="{{'recensement.superficie'|translate}}" textAlign='Left' width=80></e-column>
           <e-column  *ngFor="let intrant of  intrantsHeader ;let i = index;" field='{{intrant}}'
                     headerText='{{intrant}}'
                     textAlign='Left' width=90>

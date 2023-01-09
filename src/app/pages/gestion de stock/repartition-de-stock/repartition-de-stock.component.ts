@@ -6,6 +6,7 @@ import {GridComponent, QueryCellInfoEventArgs, RowSelectEventArgs, SelectionServ
 import {StockService} from '../../../services/endpoints/stock.service';
 import { Tooltip } from '@syncfusion/ej2-popups';
 import { DataManager, Query } from '@syncfusion/ej2-data';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-repartition-de-stock',
@@ -50,7 +51,7 @@ export class RepartitionDeStockComponent implements OnInit {
   dataSourceChild: any;
   keyIntrant: { id: null; name: null; };
 
-  constructor(private estimationService: EstimationService, private fb: FormBuilder, private stockService: StockService,
+  constructor(private estimationService: EstimationService, private fb: FormBuilder, private stockService: StockService,private translationSerive: TranslateService
   ) {
   }
 
@@ -90,7 +91,7 @@ export class RepartitionDeStockComponent implements OnInit {
     } catch (e) {
       console.log(e);
       this.element.show({
-        title: 'Erreur trouvée   !', content: e.error.error, cssClass: 'e-toast-danger'
+        title: this.translationSerive.instant('global.stock_error'), content: e.error.error, cssClass: 'e-toast-danger'
       });
     }
   }

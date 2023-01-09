@@ -3,7 +3,7 @@
   <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
-        <div class="col-sm-6"><h5 class="m-0 text-dark">Définition de besoin d'Intrants Agricole </h5></div>
+        <div class="col-sm-6"><h5 class="m-0 text-dark">{{ 'intrants.title' | translate }}</h5></div>
         <hr>
         <div #container class='root-container'></div>
         <ejs-dialog #ejDialog (beforeOpen)="validation($event)" [position]='positionModal' [target]='targetElement'
@@ -15,32 +15,32 @@
           <ng-template #content>
             <div class="dialogContent">
               <form (ngSubmit)="validationAjout()" [formGroup]="validerFormAjout">
-                <div class="table-responsive ">
+                <div class="table-responsive">
                   <!--                  <p class="text-center "><strong> CAMPAGNE AGRICOLE : CA/{{myDateYear}}/{{myDateMonth}}/... </strong>-->
                   <!--                  </p>-->
                   <div class="container text-center">
                     <div class="row g-2 mt-2">
-                      <div class="col font-weight-bold"><span> Libellé de l'Intrant </span></div>
+                      <div class="col font-weight-bold"><span>{{ 'intrants.form.libele' | translate }}</span></div>
                       <div class="col-8">
                         <input class="text-center form-control form-control-xs form-control-sm"
-                               placeholder="Ecrire le Libellé ... "
+                               placeholder="{{ 'intrants.form.placeholder.libele' | translate }}"
                                formControlName="name"
                                type="text">
 
                       </div>
                     </div>
                     <div class="row g-2 mt-2">
-                      <div class="col font-weight-bold"><span> Description </span></div>
+                      <div class="col font-weight-bold"><span>{{'intrants.form.Description' | translate }}</span></div>
                       <div class="col-8">
                         <textarea class="form-control form-control-xs form-control-sm"
-                                  placeholder="Ecrire une Description ... "
+                                  placeholder="{{'intrants.form.placeholder.Description' | translate}}"
                                   formControlName="description"></textarea>
 
                       </div>
                     </div>
                     <div class="row g-2 mt-2">
                       <div class="col font-weight-bold">
-                        <span>Unité de Messure</span>
+                        <span>{{'intrants.form.unite_mesure' | translate}}</span>
                       </div>
                       <div class="col-8">
                         <ng-select
@@ -52,7 +52,7 @@
                           appearance="outline"
                           bindLabel="name"
                           class="custom-class"
-                          placeholder="selection unité de messure"
+                          placeholder="{{'intrants.form.placeholder.unite_mesure'|translate}}"
                           formControlName="unit"
                         >
                           <ng-option value="L">
@@ -66,11 +66,11 @@
                     </div>
                     <div class="row g-2 mt-2">
                       <div class="col font-weight-bold">
-                        <span>Prix Unitaire / Kg</span>
+                        <span>{{ 'intrants.form.prix_unitaire'|translate}}</span>
                       </div>
                       <div class="col-8">
                         <input class="form-control form-control-xs form-control-sm" type="number" min="0"
-                               placeholder="saisir le prix unitaire par Kg"
+                               placeholder="{{ 'intrants.form.placeholder.prix_unitaire' | translate}}"
                                formControlName="unitCost">
                       </div>
                     </div>
@@ -80,7 +80,7 @@
                       <div class="col-2">
                         <button [disabled]="validerFormAjout.invalid "
                                 class="btn btn-sm btn-success btn-block font-weight-bold"
-                                type="submit">Valider
+                                type="submit">{{'intrants.form.valider' | translate}}
                         </button>
                       </div>
                     </div>
@@ -105,16 +105,16 @@
               <button [disabled]="tailleSelect>0" (click)="onOpenDialog($event)" class="btn btn-sm btn-outline-primary"
                       type="button"><span
                 class="fas fa-plus "></span>
-                Ajouter
+                {{'intrants.form.ajouter'|translate}}
               </button>
               <button (click)="onOpenDialogModification($event)" [disabled]="tailleSelect>1 || tailleSelect === 0 "
                       class="btn btn-sm btn-outline-primary ml-4"
                       type="button"><span class="fas fa-building "></span>
-                Modifier
+                {{'intrants.form.modifier'|translate}}
               </button>
               <button (click)="deletes()" [disabled]=" tailleSelect === 0 " class="btn btn-sm btn-outline-danger ml-4" type="button"><span
                 class="fas fa- "></span>
-                Supprimer({{tailleSelect}})
+                {{'intrants.form.supprimer'|translate}}({{tailleSelect}})
               </button>
             </div>
             <hr class="col-md-5">
@@ -135,17 +135,17 @@
               >
                 <e-columns>
                   <e-column type="checkbox" width="33" textAlign='Left'></e-column>
-                  <e-column field='unit' headerText='Unité de Messure'  width=100>
+                  <e-column field='unit' headerText="{{'intrants.table.unite_mesure' | translate}}"  width=100>
                     <ng-template #template let-data>
                       {{data.unit}}
                     </ng-template>
                   </e-column>
-                  <e-column field='intrant' headerText='Libellé' textAlign='Left' width=150>
+                  <e-column field='intrant' headerText="{{'intrants.table.libele' | translate}}" textAlign='Left' width=150>
                     <ng-template #template let-data>
                       {{data.name}}
                     </ng-template>
                   </e-column>
-                  <e-column field='description' headerText='Description' textAlign='Left' width=150>
+                  <e-column field='description' headerText="{{'intrants.table.Description' | translate}}" textAlign='Left' width=150>
                     <ng-template #template let-data>
                       {{data.description}}
                     </ng-template>
@@ -156,7 +156,7 @@
 <!--                    </ng-template>-->
 <!--                  </e-column>-->
 
-                  <e-column field='unitCost' headerText="Prix Unitaire" textAlign='Left' width=130>
+                  <e-column field='unitCost' headerText="{{'intrants.table.unite_mesure' | translate}}" textAlign='Left' width=130>
                     <ng-template #template let-data>
                       {{data.unitCost.toLocaleString()}}
                     </ng-template>
@@ -166,15 +166,15 @@
 <!--                      {{data.cout.toLocaleString()}}-->
 <!--                    </ng-template>-->
 <!--                  </e-column>-->
-                  <e-column field='createdAt' headerText="Date Creation" textAlign='Left' width=100>
+                  <e-column field='createdAt' headerText="{{'intrants.table.Date_creation' | translate}}" textAlign='Left' width=100>
                     <ng-template #template let-data>
                       {{data.createdAt}}
                     </ng-template>
                   </e-column>
-                  <e-column headerText='Option' textAlign='Center' width=80>
+                  <e-column headerText="{{'intrants.table.option' | translate}}" textAlign='Center' width=80>
                     <ng-template #template let-data>
                       <a (click)="onOpenDialogDetail($event,data)" class="btn btn-sm " style="color: #3d3b3b"><i
-                        class="far fa-eye"> detail</i></a>
+                        class="far fa-eye">{{'intrants.table.detail' | translate}}</i></a>
                     </ng-template>
                   </e-column>
                 </e-columns>

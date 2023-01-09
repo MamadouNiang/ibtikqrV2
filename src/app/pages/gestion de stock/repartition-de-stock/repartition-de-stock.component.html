@@ -6,7 +6,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-5">
-          <h5 class="m-0 text-dark">Reparatition des subventions </h5>
+          <h5 class="m-0 text-dark">{{'rapartition_stock.title' | translate }}</h5>
         </div>
         <div style="margin-left: -3%" class="col-3  ml-4 mt-auto">
           <!--          <form [formGroup]="validerFormCampagne">-->
@@ -32,7 +32,7 @@
                 {{region.name}}
               </option>
               <option value="{{reg.id}}" *ngFor="let reg of regions ; let i = index ">
-                {{i + 1}} - {{reg.name}}
+                {{i + 1}} - {{reg.name | translate}}
               </option>
             </select>
 
@@ -55,16 +55,16 @@
             <div class="control-section">
               <div class="row">
                 <div class="col-sm-6">
-                  <div class='e-mastertext'><p class="text-center font-weight-bold">Liste des Campagnes </p></div>
+                  <div class='e-mastertext'><p class="text-center font-weight-bold">{{ "rapartition_stock.list" | translate}}</p></div>
                   <ejs-grid #mastergrid id="mastergrid" [dataSource]='data' [selectedRowIndex]="0"
                             (rowSelected)="onRowSelected($event)" (queryCellInfo)='tooltip($event)'>
                     <e-columns>
-                      <e-column field='campaign' headerText='Code' width='100'>
+                      <e-column field='campaign' headerText="{{'rapartition_stock.table.code' | translate }}" width='100'>
                         <ng-template #template let-data>
                           {{data.campaign.code}}
                         </ng-template>
                       </e-column>
-                      <e-column field='description' headerText='Description Campagne' width='150'>
+                      <e-column field='description' headerText="{{'rapartition_stock.table.description' | translate }}" width='150'>
                         <ng-template #template let-data>
                           {{data.campaign.description}}
                         </ng-template>
@@ -75,7 +75,7 @@
                         </ng-template>
 
                       </e-column>
-                      <e-column field='totalCost' headerText='Montant' width='120'>
+                      <e-column field='totalCost' headerText="{{'rapartition_stock.table.montant' | translate}}" width='120'>
                         <ng-template #template let-data>
                           {{data.campaign.totalCost.toLocaleString()}}
                         </ng-template>
@@ -97,29 +97,29 @@
                   </ejs-grid>
                 </div>
                 <div class="col-sm-6">
-                  <div class='e-statustext'><p class="text-center font-weight-bold">Detail de la campagne : {{key}}</p>
+                  <div class='e-statustext'><p class="text-center font-weight-bold">{{ "rapartition_stock.detail" | translate}} : {{key}}</p>
                   </div>
                   <ejs-grid #detailgrid id="detailgrid" [dataSource]='data' [selectedRowIndex]="0"
                             (rowSelected)="onRowSelectedChild($event)">
                     <e-columns>
-                      <e-column field='name' headerText='Libellé' width='150'></e-column>
-                      <e-column field='quantity' headerText='Quantité' width='100'>
+                      <e-column field='name' headerText="{{ 'rapartition_stock.table.libelle' | translate}}" width='150'></e-column>
+                      <e-column field='quantity' headerText="{{ 'rapartition_stock.table.quantite' | translate}}" width='100'>
                         <ng-template #template let-data>
                           <div *ngIf="data.quantity!=undefined">  {{data.quantity.toLocaleString()}}</div>
 
                         </ng-template>
                       </e-column>
-                      <e-column field='unit' headerText="Unité" width='80'>
+                      <e-column field='unit' headerText="{{ 'rapartition_stock.table.unite' | translate}}" width='80'>
                         <ng-template #template let-data>
                           <div *ngIf="data.unit!=undefined">{{data.unit.toLocaleString()}}</div>
                         </ng-template>
                       </e-column>
-                      <e-column field='unitCost' headerText="Prix unitaire" width='120'>
+                      <e-column field='unitCost' headerText="{{ 'rapartition_stock.table.prix_unitaire' | translate}}" width='120'>
                         <ng-template #template let-data>
                           <div *ngIf="data.unitCost!=undefined"> {{data.unitCost.toLocaleString()}}</div>
                         </ng-template>
                       </e-column>
-                      <e-column field='totalCost' headerText="Montant" width='120'>
+                      <e-column field='totalCost' headerText="{{ 'rapartition_stock.table.montant' | translate}}" width='120'>
                         <ng-template #template let-data>
                           <div *ngIf="data.totalCost!=undefined">{{data.totalCost.toLocaleString()}}</div>
                         </ng-template>
@@ -158,20 +158,20 @@
                   </p>
                   <ejs-grid #detailgridChild id="detailgridChild" [allowSelection]='false' [dataSource]='data'>
                     <e-columns>
-                      <e-column field='farmerFirstName' headerText='farmerFirstName' width='150'></e-column>
-                      <e-column field='farmerLastName' headerText='farmerLastName' width='100'></e-column>
-                      <e-column field='farmerNNI' headerText="farmerNNI" width='80'></e-column>
-                      <e-column field='acreage' headerText=" acreage" width='120'></e-column>
-                      <e-column field='longitude' headerText="longitude" width='120'></e-column>
-                      <e-column field='latitude' headerText="latitude" width='120'></e-column>
-                      <e-column field='quantity' headerText="quantity de sortie" width='120'>
+                      <e-column field='farmerFirstName' headerText="{{ 'rapartition_stock.table.farmerFirstName' | translate}}" width='150'></e-column>
+                      <e-column field='farmerLastName' headerText="{{ 'rapartition_stock.table.farmerLastName' | translate}}" width='100'></e-column>
+                      <e-column field='farmerNNI' headerText="{{ 'rapartition_stock.table.farmerNNI' | translate}}" width='80'></e-column>
+                      <e-column field='acreage' headerText="{{ 'rapartition_stock.table.acreage' | translate}}" width='120'></e-column>
+                      <e-column field='longitude' headerText="{{ 'rapartition_stock.table.longitude' | translate}}" width='120'></e-column>
+                      <e-column field='latitude' headerText="{{ 'rapartition_stock.table.latitude' | translate}}" width='120'></e-column>
+                      <e-column field='quantity' headerText="{{ 'rapartition_stock.table.quantity_de_sortie' | translate}}" width='120'>
                         <ng-template #template let-data>
                           <div *ngFor="let es of data.estimationCostQuantities">
                             <div *ngIf="es.agriculturalInputId===keyIntrant.id">{{es.quantity}}</div>
                           </div>
                         </ng-template>
                       </e-column>
-                      <e-column field='totalCamp' headerText="Montant" width='100'>
+                      <e-column field='totalCamp' headerText="{{ 'rapartition_stock.table.montant' | translate}}" width='100'>
                         <ng-template #template let-data>
                         </ng-template>
                       </e-column>

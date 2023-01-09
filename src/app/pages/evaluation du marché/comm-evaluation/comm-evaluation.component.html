@@ -6,14 +6,14 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h5 class="m-0 text-dark">Commission d'evaluation - {{region}} ( {{myDate}} )</h5>
+          <h5 class="m-0 text-dark">{{'comm_evaluation.title'| translate}} - {{region | translate}} ( {{myDate}} )</h5>
         </div>
         <div style="margin-left: -3%" class="col-sm-4">
           <form [formGroup]="validerFormCampagne">
             <select (change)="getStaticalSheetByRegion()"
                     formControlName="idCamp"
                     class="form-control form-control-sm">
-              <option selected  disabled value="">-- selectionner une campagne --
+              <option selected  disabled value="">-- {{'comm_evaluation.select'| translate}} --
               </option>
               <option *ngFor="let ca of campgnes" value="{{ca.id}}">
                 {{ca.code}}
@@ -24,13 +24,13 @@
         <div class="col-sm-1 ">
           <button (click)="validerStaticalSheet()"  [disabled]="tailleSelect===undefined || tailleSelect===null || tailleSelect===0 " type="button"
                   class="btn btn-sm btn-success ">
-            <i class="bi bi-check"></i> Valider({{tailleSelect}})
+            <i class="bi bi-check"></i>{{'comm_evaluation.statut.valide'| translate}}({{tailleSelect}})
           </button>
         </div>
         <div class="col-sm-1" style="margin-left: 1%;">
           <button (click)="rejeterStaticalSheet()" [disabled]="tailleSelect===undefined || tailleSelect===null || tailleSelect===0 " type="button"
                   class=" btn btn-sm btn-danger ">
-            <i class="bi bi-check"></i>Rejeter ({{tailleSelect}})
+            <i class="bi bi-check"></i>{{'global.rejeter'| translate}} ({{tailleSelect}})
           </button>
         </div>
       </div>
@@ -58,14 +58,14 @@
               >
                 <e-columns>
                   <e-column type="checkbox" width="33" textAlign='Center' id="nour"></e-column>
-                  <e-column field='farmerNNI' headerText='NNI' textAlign='Center' width=89></e-column>
-                  <e-column field='farmerFirstName' field='farmerLastName' headerText='Nom et prenom' textAlign='Left' width=160>
+                  <e-column field='farmerNNI' headerText="{{'comm_evaluation.table.nni' | translate}}" textAlign='Center' width=89></e-column>
+                  <e-column field='farmerFirstName' field='farmerLastName' headerText="{{'comm_evaluation.table.name' | translate}}" textAlign='Left' width=160>
                     <ng-template #template let-data>
                       {{data.farmerFirstName }} {{data.farmerLastName }}
                     </ng-template>
                   </e-column>
-                  <e-column field='acreage' headerText='Superficie' textAlign='Center' width=80></e-column>
-                  <e-column field='agriculturalInputs' headerText='Subvention' textAlign='Left' width=160>
+                  <e-column field='acreage' headerText="{{'comm_evaluation.table.superficie' | translate}}" textAlign='Center' width=80></e-column>
+                  <e-column field='agriculturalInputs' headerText="{{'comm_evaluation.table.subvention' | translate}}" textAlign='Left' width=160>
                     <ng-template #template let-data >
                       <tr *ngFor="let e of data.agriculturalInputs ;let i = index;">
                         <td >{{i+1}}: {{e.name }} : {{ e.unitCost }} {{ e.unit}}</td>
@@ -73,6 +73,10 @@
 
                     </ng-template>
                   </e-column>
+                  <e-column field='isArchived' headerText="{{'comm_evaluation.table.etat' | translate}}" textAlign='Center' width=90>
+                    <ng-template #template let-data>
+                      <div *ngIf="data.isArchived;else login" class="statustemp e-activecolor">
+                        <span class="statustxt e-activecolor">"{{'comm_evaluation.statut.valide' | translate}}"</span>
                   <e-column  field='status' headerText='Etat' textAlign='Center' width=90>
 
                     <ng-template  #template let-data>
@@ -81,6 +85,9 @@
                           <span  class="statustxt e-warningactivecolor"> Rejeter</span>
                         </div>
                       </div>
+                      <ng-template #login>
+                        <div class="statustemp e-inactivecolor">
+                          <span class="statustxt e-inactivecolor">"{{'comm_evaluation.statut.en_attente' | translate}}</span>
                       <div *ngIf="data.status==='PENDING'">
                         <div class="statustemp e-inactivecolor font-weight-bold">
                           <span class="statustxt e-inactivecolor">En attente</span>

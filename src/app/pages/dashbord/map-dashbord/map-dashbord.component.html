@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-md-12 card card-outline card-primary">
     <div class="card-header">
-      <h5 class="card-title font-weight-bold">Zone de subvention</h5>
+      <h5 class="card-title font-weight-bold">{{ 'dashbord.zone_subvention' | translate}}</h5>
       <div class="card-tools">
         <button type="button" class="btn btn-tool" data-card-widget="collapse">
           <i class="fas fa-minus"></i>
@@ -28,13 +28,13 @@
                     gridLines="Both"
           >
             <e-columns>
-              <e-column field='farmerNNI' headerText='NNI' textAlign='Center' width=89></e-column>
-              <e-column field='farmerFirstName' field='farmerLastName' headerText='Nom et prenom' textAlign='Left' width=160>
+              <e-column field='farmerNNI' headerText="{{ 'dashbord.nni'| translate}}" textAlign='Center' width=89></e-column>
+              <e-column field='farmerFirstName' field='farmerLastName' headerText='{{ "dashbord.name"| translate}}' textAlign='Left' width=160>
                 <ng-template #template let-data>
                   {{data.farmerFirstName }} {{data.farmerLastName }}
                 </ng-template>
               </e-column>
-              <e-column field='agriculturalInputs' headerText='Subvention' textAlign='Left' width=160>
+              <e-column field='agriculturalInputs' headerText='{{ "dashbord.subvention"| translate}}' textAlign='Left' width=160>
                 <ng-template #template let-data >
                   <tr *ngFor="let e of data.agriculturalInputs ;let i = index;">
                     <td >{{i+1}}: {{e.name }} : {{ e.unitCost }} {{ e.unit}}</td>

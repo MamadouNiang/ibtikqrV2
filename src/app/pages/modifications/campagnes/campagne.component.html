@@ -3,21 +3,21 @@
   <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
-        <div class="col-sm-6"><h5 class="m-0 text-dark">Expression de besoin: Planning prévisionnel </h5></div>
+        <div class="col-sm-6"><h5 class="m-0 text-dark">{{'campagne.title' | translate }}</h5></div>
         <div class="col-sm-5">
           <div class="btn-toolbar mt-1 mb-md-0 breadcrumb float-sm-right">
             <span class="badge badge-pill even-larger-badge"
-                  style="font-size: 1.0em;">Creation d'une nouvelle Campagne Agricole </span>
+                  style="font-size: 1.0em;">{{'campagne.creation' | translate}}</span>
           </div>
         </div>
         <div class="col-sm-1 ">
-          <button type="button" class="btn btn-block btn-primary btn-xs" (click)="onOpenDialog($event)">initier ?
+          <button type="button" class="btn btn-block btn-primary btn-xs" (click)="onOpenDialog($event)">{{'campagne.init' | translate}} ?
           </button>
         </div>
         <hr>
         <div #container class='root-container'></div>
         <ejs-dialog (beforeOpen)="validation($event)" class="mt-3" id='dialog' isModal='true' [position]='positionModal'
-                    #ejDialog header="Ajout d'une Campagne Agricole"
+                    #ejDialog header="{{'campagne.form.ajout'|translate}}"
                     showCloseIcon='true'
                     allowDragging='true'
                     [target]='targetElement' width='560px'>
@@ -25,11 +25,11 @@
             <div class="dialogContent">
               <form [formGroup]="validerFormAjout" (ngSubmit)="validationAjout()">
                 <div class="table-responsive ">
-                  <p class="text-center "><strong> CAMPAGNE AGRICOLE : CA/{{myDateYear}}/{{myDateMonth}}/... </strong>
+                  <p class="text-center "><strong>{{'campagne.form.code' | translate}} : CA/{{myDateYear}}/{{myDateMonth}}/... </strong>
                   </p>
                   <div class="container text-center">
                     <div class="row g-2 mt-2">
-                      <div class="col"><span> Code de la Campagne </span></div>
+                      <div class="col"><span> {{'campagne.form.intrant'|translate}}</span></div>
                       <div class="col-8">
                         <input disabled class="text-center form-control form-control-xs form-control-sm"
                                formControlName="codeCa"
@@ -38,7 +38,7 @@
                       </div>
                     </div>
                     <div class="row g-2 mt-2">
-                      <div class="col"><span> Description </span></div>
+                      <div class="col"><span>{{'campagne.form.description'|translate}}</span></div>
                       <div class="col-8">
                         <textarea class="form-control form-control-xs form-control-sm"
                                   formControlName="description"></textarea>
@@ -51,7 +51,7 @@
                            formArrayName='intrants'>
                         <div class="row" [formGroupName]="i">
                           <div class="col-4">
-                            Intrant {{i + 1}}
+                            {{'campagne.form.intrant'|translate}} {{i + 1}}
                           </div>
                           <select (change)="changeIntrant()" class=" col-4 custom-select custom-select-sm" aria-label="Default select example"
                                   formControlName="agriculturalInputId">
@@ -80,14 +80,14 @@
 
                     <div class="row g-2 mt-2">
                       <div class="col-2 mt-3">
-                        <span> Date Debut </span>
+                        <span>{{'campagne.form.date_debut'|translate}}</span>
                       </div>
                       <div class="col-4 mt-2">
                         <input class="text-center form-control form-control-xs form-control-sm"
                                formControlName="startDate"
                                type="date">
                       </div>
-                      <div class="col-2 mt-3"> Date Fin</div>
+                      <div class="col-2 mt-3">{{'campagne.form.date_fin'|translate}}</div>
                       <div class="col-4 mt-2">
                         <input class="text-center form-control form-control-xs form-control-sm"
                                formControlName="endDate"
@@ -100,7 +100,7 @@
                       <div class="col-2">
                         <button [disabled]="validerFormAjout.invalid "
                                 class="btn btn-sm btn-success btn-block"
-                                type="submit">Valider
+                                type="submit">{{'campagne.form.valider'|translate}}
                         </button>
                       </div>
                     </div>
@@ -124,24 +124,24 @@
               <button (click)="changeEtatIntrantImCamp()" [disabled]="tailleSelect === 0 " class="btn btn-sm btn-outline-primary"
                       type="button"><span
                 class="fas fa-check "></span>
-                Valider ({{tailleSelect}})
+                {{'global.valider' |translate}} ({{tailleSelect}})
               </button>
               <button [disabled]="tailleSelect > 0 " (click)="onOpenDialogAjout($event)"
                       class="btn btn-sm btn-outline-primary ml-4"
                       type="button"><span
                 class="fas fa-plus "></span>
-                Ajouter
+                {{'global.ajouter' |translate}}
               </button>
               <button [disabled]="tailleSelect>1 || tailleSelect === 0 "
                       (click)="onOpenDialogModification($event)"
                       class="btn btn-sm btn-outline-primary ml-4"
                       type="button"><span class="fas fa-pencil-alt "></span>
-                Modifier
+                {{'global.modifier' |translate}}
               </button>
               <button (click)="removeIntrantInCamp()" [disabled]="tailleSelect === 0 "
                       class="btn btn-sm btn-outline-danger ml-4" type="button"><span
                 class="fas fa- "></span>
-                Supprimer ({{tailleSelect}})
+                {{'global.supprimer' |translate}} ({{tailleSelect}})
               </button>
             </div>
             <hr class="col-md-5">
@@ -166,27 +166,27 @@
             >
               <e-columns>
                 <e-column type="checkbox" width="33" textAlign='Left'></e-column>
-                <e-column field='code' headerText='Campagne' textAlign='Left' width=140>
+                <e-column field='code' headerText="{{'campagne.table.campage' | translate }}" textAlign='Left' width=140>
                   <ng-template #template let-data>
                     {{data.code}}
                   </ng-template>
                 </e-column>
-                <e-column field='name' headerText='Subventions' textAlign='Center' width=150>
+                <e-column field='name' headerText="{{'campagne.table.subventions' | translate }}" textAlign='Center' width=150>
                   <ng-template #template let-data>
                     {{data.name }}
                   </ng-template>
                 </e-column>
-                <e-column field='quantity' headerText="Quantitée(s)" textAlign='Center' width=120>
+                <e-column field='quantity' headerText="{{'campagne.table.Quantite' | translate }}" textAlign='Center' width=120>
                   <ng-template #template let-data>
                     {{data.quantity | json}}
                   </ng-template>
                 </e-column>
-                <e-column field='unit' headerText="Unité" textAlign='Center' width=80>
+                <e-column field='unit' headerText="{{'campagne.table.Unite' | translate }}" textAlign='Center' width=80>
                   <ng-template #template let-data>
                     {{data.unit}}
                   </ng-template>
                 </e-column>
-                <e-column field='unitCost' headerText='Prix (MRU)' textAlign='Center' width=90>
+                <e-column field='unitCost' headerText="{{'campagne.table.Prix' | translate }}" textAlign='Center' width=90>
                   <ng-template #template let-data>
                     {{(data.campaignUnitCost ? data.campaignUnitCost : data.unitCost).toLocaleString()}}
                   </ng-template>
@@ -196,25 +196,25 @@
 <!--                    {{((data.intrantTotal)).toLocaleString()}}-->
 <!--                  </ng-template>-->
 <!--                </e-column>-->
-                <e-column field='intrantTotal' headerText='Total' textAlign='Center' width=90>
+                <e-column field='intrantTotal' headerText="{{'campagne.table.total' | translate}}" textAlign='Center' width=90>
                   <ng-template #template let-data>
                     {{((data.intrantTotal)).toLocaleString()}}
                   </ng-template>
                 </e-column>
-                <e-column field='actived' headerText='Validation' textAlign='Left' width=90>
+                <e-column field='actived' headerText="{{'campagne.table.validation' | translate}}" textAlign='Left' width=90>
                   <ng-template #template let-data>
                     <div *ngIf="data.isValid === true;else login"
                          class="statustemp e-activecolor">
-                      <span class="statustxt e-activecolor">  Validé</span>
+                      <span class="statustxt e-activecolor">{{'campagne.table.Valide' | translate}}</span>
                     </div>
                     <ng-template #login>
                       <div class="statustemp e-inactivecolor">
-                        <span class="statustxt e-inactivecolor"> en attente</span>
+                        <span class="statustxt e-inactivecolor">{{'campagne.table.en-attente' | translate}}</span>
                       </div>
                     </ng-template>
                   </ng-template>
                 </e-column>
-                <e-column headerText='Option' textAlign='Center' width=80>
+                <e-column headerText="{{'campagne.table.option' |translate}}" textAlign='Center' width=80>
                   <ng-template #template let-data>
                     <a class="btn btn-sm " style="color: #3d3b3b" (click)="onOpenDialogDetail($event,data)"><i
                       class="far fa-eye"> </i></a>
@@ -254,19 +254,19 @@
         <ejs-dialog (beforeOpen)="validation($event)" class="mt-3" id='dialogDetail' isModal='true'
                     [position]='positionModal'
                     allowDragging='true'
-                    #ejDialogDetail header="Detail d'une Campagne Agricole : {{this.DetailCodeCa}}"
+                    #ejDialogDetail header="{{'campagne.detail.header' | translate}} {{this.DetailCodeCa}}"
                     showCloseIcon='true'
                     [target]='targetElementDetail' width='560px'>
           <ng-template #content>
             <div class="dialogContent">
               <form>
                 <div class="table-responsive ">
-                  <p *ngIf="DetailCa!=undefined || DetailCa!=null" class="text-center "><strong> CAMPAGNE AGRICOLE
+                  <p *ngIf="DetailCa!=undefined || DetailCa!=null" class="text-center "><strong>{{'campagne.detail.campagne' | translate}}
                     : {{this.DetailCa.code }} - {{this.DetailCa.name}} </strong>
                   </p>
                   <div class="container text-center">
                     <div class="row g-2 mt-2">
-                      <div class="col"><span> Description </span></div>
+                      <div class="col"><span>{{'campagne.detail.description' | translate}}</span></div>
                       <div class="col-8">
                         <textarea *ngIf="DetailCa!=undefined || DetailCa!=null"
                                   class="form-control form-control-xs form-control-sm">{{this.DetailCa.description}}
@@ -275,7 +275,7 @@
                       </div>
                     </div>
                     <div class="row g-2 mt-2">
-                      <div class="col"><span> Intrant </span></div>
+                      <div class="col"><span>{{'campagne.detail.intrant' | translate}}</span></div>
                       <div class="col-8">
                         <input *ngIf="DetailCa!=undefined || DetailCa!=null"
                                class="form-control text-center form-control-xs form-control-sm"
@@ -284,7 +284,7 @@
                       </div>
                     </div>
                     <div class="row g-2 mt-2">
-                      <div class="col"><span> Prix </span></div>
+                      <div class="col"><span>{{'campagne.detail.prix'| translate}}</span></div>
                       <div class="col-8">
                         <input *ngIf="DetailCa!=undefined || DetailCa!=null"
                                class="form-control text-center form-control-xs form-control-sm"
@@ -292,7 +292,7 @@
                       </div>
                     </div>
                     <div class="row g-2 mt-2">
-                      <div class="col"><span> Quantitée(s) </span></div>
+                      <div class="col"><span>{{'campagne.detail.quantite' | translate}}</span></div>
                       <div class="col-8">
                         <input *ngIf="DetailCa!=undefined || DetailCa!=null"
 
@@ -301,7 +301,7 @@
                       </div>
                     </div>
                     <div class="row g-2 mt-2">
-                      <div class="col"><span> Total </span></div>
+                      <div class="col"><span>{{'campagne.detail.total' | translate}}</span></div>
                       <div class="col-8">
                         <input *ngIf="DetailCa!=undefined || DetailCa!=null "
                                class="form-control text-center form-control-xs form-control-sm"
@@ -312,7 +312,7 @@
                     </div>
                     <div class="row g-2 mt-2">
                       <div class="col-2 mt-3">
-                        <span> Date Debut </span>
+                        <span>{{'campagne.detail.date_debut' | translate}}</span>
                       </div>
                       <div class="col-4 mt-2">
                         <input *ngIf="DetailCa!=undefined || DetailCa!=null"
@@ -320,7 +320,7 @@
                                value="{{this.DetailCa.startDate}}"
                                type="date">
                       </div>
-                      <div class="col-2 mt-3"> Date Fin</div>
+                      <div class="col-2 mt-3">{{'campagne.detail.date_fin' | translate}}</div>
                       <div class="col-4 mt-2">
                         <input *ngIf="DetailCa!=undefined || DetailCa!=null"
                                class="text-center form-control form-control-xs form-control-sm"
@@ -339,7 +339,7 @@
         <ejs-dialog (beforeOpen)="validation($event)" class="mt-3" id='dialogModification' isModal='true'
                     [position]='positionModal'
                     allowDragging='true'
-                    #ejDialogModification header="Modification d'une Campagne Agricole :"
+                    #ejDialogModification header="{{'campagne.edit.title' | translate}}"
                     showCloseIcon='true'
                     [target]='targetElementModification' width='560px'>
           <ng-template #content>
@@ -347,12 +347,12 @@
               <form [formGroup]="validerFormModification" (ngSubmit)="validationModification()">
                 <div class="table-responsive ">
                   <br>
-                  <p *ngIf="caModifData!=undefined || caModifData!=null" class="text-center "><strong> CAMPAGNE AGRICOLE
+                  <p *ngIf="caModifData!=undefined || caModifData!=null" class="text-center "><strong>{{'campagne.edit.campagne_agricole' | translate}}
                     : {{caModifData.code }} - {{caModifData.name}} </strong>
                   </p>
                   <div class="container text-center">
                     <div class="row g-2 mt-2">
-                      <div class="col"><span> Intrant </span></div>
+                      <div class="col"><span>{{'campagne.edit.intrat' | translate}}</span></div>
                       <div class="col-8">
                         <input disabled *ngIf="caModifData!=undefined || caModifData!=null"
                                class="form-control text-center form-control-xs form-control-sm"
@@ -361,7 +361,7 @@
                       </div>
                     </div>
                     <div class="row g-2 mt-2">
-                      <div class="col"><span> Prix </span></div>
+                      <div class="col"><span>{{'campagne.edit.prix' | translate}}</span></div>
                       <div class="col-8">
                         <input *ngIf="caModifData!=undefined || caModifData!=null"
                                class="form-control text-center form-control-xs form-control-sm"
@@ -370,7 +370,7 @@
                       </div>
                     </div>
                     <div class="row g-2 mt-2">
-                      <div class="col"><span> Quantitée(s) </span></div>
+                      <div class="col"><span>{{'campagne.edit.quantite' | translate}}</span></div>
                       <div class="col-8">
                         <input *ngIf="caModifData!=undefined || caModifData!=null"
                                formControlName="quantity"
@@ -385,7 +385,7 @@
                       <div class="col-2">
                         <button [disabled]="validerFormModification.invalid "
                                 class="btn btn-sm btn-success btn-block"
-                                type="submit">Valider
+                                type="submit">{{'campagne.edit.valider' | translate}}
                         </button>
                       </div>
                     </div>
@@ -399,7 +399,7 @@
         <ejs-dialog (beforeOpen)="validation($event)" class="mt-3" id='dialogAjout' isModal='true'
                     [position]='positionModal'
                     allowDragging='true'
-                    #ejDialogAjout header="Ajout d'un Intrant dans une Campagne Agricole :"
+                    #ejDialogAjout header="{{'campagne.add.tile' | translate}}"
                     showCloseIcon='true'
                     [target]='targetElementAjout' width='560px'>
           <ng-template #content>
@@ -408,7 +408,7 @@
                 <div class="table-responsive ">
                   <div class="container text-center">
                     <div class="row g-2 mt-2">
-                      <div class="col"><span>CAMPAGNES </span></div>
+                      <div class="col"><span>{{'campagne.add.campagne' | translate}}</span></div>
                       <div class="col-8">
                         <ng-select
                                    [clearable]="true"
@@ -435,7 +435,7 @@
                            formArrayName='intrants'>
                         <div class="row" [formGroupName]="i">
                           <div class="col-4">
-                            Intrant {{i + 1}}
+                            {{'campagne.edit.intrat' | translate}} {{i + 1}}
                           </div>
                           <select (change)="changeIntrantAjout()" class=" col-4 custom-select custom-select-sm" aria-label="Default select example"
                                   formControlName="agriculturalInputId">
@@ -443,7 +443,7 @@
                           </select>
                           <div class="col-3">
                             <input class="text-center form-control form-control-xs form-control-sm"
-                                   placeholder="quantité"
+                                   placeholder="{{'campagne.edit.quantite' | translate}}"
                                    formControlName="quantity"
                                    type="number">
                           </div>
@@ -467,7 +467,7 @@
                       <div class="col-2">
                         <button [disabled]="validerFormAjoutIntrant.invalid "
                                 class="btn btn-sm btn-success btn-block"
-                                type="submit">Valider
+                                type="submit">{{'campagne.edit.valider' | translate}}
                         </button>
                       </div>
                     </div>

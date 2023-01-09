@@ -10,6 +10,7 @@ import {GroupSettingsModel} from '@syncfusion/ej2-angular-grids';
 import {ToastAnimationSettingsModel, ToastPositionModel} from '@syncfusion/ej2-angular-notifications';
 import {EstimationService} from '../../../services/endpoints/estimation.service';
 import {map} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-instance-stock',
@@ -45,6 +46,7 @@ export class InstanceStockComponent implements OnInit {
 
   constructor(
     private estimationService: EstimationService,
+    private translationService: TranslateService
   ) {
   }
 
@@ -105,12 +107,12 @@ export class InstanceStockComponent implements OnInit {
   public startAngleV: number = 0;
   public endAngleV: number = 360;
   public tooltipV: TooltipSettingsModel = {enable: true};
-  public titleV: string = 'subvention en engrais';
+  public titleV: string = this.translationService.instant('dashbord.subvention_engrais');
   // custom code end
   public startAngleNv: number = 0;
   public endAngleNv: number = 360;
   public tooltipNv: TooltipSettingsModel = {enable: true};
-  public titleNv: string = 'subvention en herbicides';
+  public titleNv: string = this.translationService.instant('dashbord.subvention_herbi');
 
   ngOnInit(): void {
     this.rolename = localStorage.getItem('roleName')
