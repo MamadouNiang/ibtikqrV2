@@ -3,14 +3,14 @@
     <div class="container-fluid">
       <div class="card card-primary card-outline card-tabs">
         <div class="card-header">
-          <h5 class="card-title"><strong> Fiche de suivi des activités de la campagne ( {{myDate}} )</strong>
+          <h5 class="card-title"><strong>{{'fiche-suivi.fiche-activite' | translate}} ( {{myDate}} )</strong>
           </h5>
           <div class="card-tools">
             <form [formGroup]="validerFormCampagne">
               <select (change)="createStaticalSheetByCampagne()"
                       formControlName="idCamp"
                       class="form-control form-control-sm">
-                <option selected disabled value="">-- selectionner une campagne --
+                <option selected disabled value="">-- {{'fiche-suivi.select-campagne'|translate}} --
                 </option>
                 <option *ngFor="let ca of campagnes" value="{{ca.id}}">
                   {{ca.code}}
@@ -32,7 +32,7 @@
                 <div class="step" data-target="#inf1">
                   <button type="button" class="step-trigger" role="tab" aria-controls="inf1" id="inf1-trigger">
                     <span class="bs-stepper-circle">1</span>
-                    <span class="bs-stepper-label">Infos Générale</span>
+                    <span class="bs-stepper-label">{{'fiche-suivi.info-general'|translate}}</span>
                   </button>
                 </div>
                 <div class="line"></div>
@@ -40,7 +40,7 @@
                   <button [disabled]="validerFormCampagne.invalid" type="button" class="step-trigger" role="tab"
                           aria-controls="inf2" id="inf2-trigger">
                     <span class="bs-stepper-circle">2</span>
-                    <span class="bs-stepper-label">Exploitation</span>
+                    <span class="bs-stepper-label">{{'fiche-suivi.explotation'|translate}}</span>
                   </button>
                 </div>
                 <div class="line"></div>
@@ -48,7 +48,7 @@
                   <button [disabled]="validerFormCampagne.invalid" type="button" class="step-trigger" role="tab"
                           aria-controls="inf3" id="inf3-trigger">
                     <span class="bs-stepper-circle">3</span>
-                    <span class="bs-stepper-label">DonnéesTéchniques</span>
+                    <span class="bs-stepper-label">{{'fiche-suivi.donnees-technique'|translate}}</span>
                   </button>
                 </div>
                 <div class="line"></div>
@@ -56,7 +56,7 @@
                   <button [disabled]="validerFormCampagne.invalid" type="button" class="step-trigger" role="tab"
                           aria-controls="inf4" id="inf4-trigger">
                     <span class="bs-stepper-circle">4</span>
-                    <span class="bs-stepper-label">Récapitulatif</span>
+                    <span class="bs-stepper-label">{{'fiche-suivi.recapitulatif'|translate}}</span>
                   </button>
                 </div>
               </div>
@@ -67,35 +67,35 @@
                     <div class="row separateLine">
                       <div class="col ">
                         <div class="text-center form-group">
-                          <label> <u>Informations Génerales </u></label>
+                          <label> <u>{{'fiche-suivi.info-general'|translate}}</u></label>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-4">
-                            <label>Wilaya*</label>
+                            <label>{{'fiche-suivi.info.wilaya'|translate}}</label>
                             <input
                               value="{{region}}"
                               formControlName="region"
                               disabled
                               type="text"
-                              class="form-control form-control-sm" placeholder="{{region}}">
+                              class="form-control form-control-sm" placeholder="{{'fiche-suivi.info.wilaya'|translate}}">
                           </div>
                           <div class="form-group col-md-4">
-                            <label>Moughataa</label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Moughataa">
+                            <label>{{'fiche-suivi.info.moughataa' | translate}}</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info.moughataa' | translate}}">
                           </div>
                           <div class="form-group col-md-4">
-                            <label>Commune</label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Commune">
+                            <label>{{'fiche-suivi.info.commune' | translate}}</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info.commune' | translate}}">
                           </div>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-6">
-                            <label>Téléphone*</label>
+                            <label>{{'fiche-suivi.info.telephone' | translate}}</label>
                             <input
                               required
                               maxlength=8 minlength=8
                               type="number" class="form-control form-control-sm"
-                              placeholder="Numero de téléphone"
+                              placeholder="{{'fiche-suivi.info.num_tel' | translate}}"
                               formControlName="telephone"
                               [class.is-invalid]="validerFormStep1.get('telephone')!.invalid && (validerFormStep1.get('telephone')!.dirty || validerFormStep1.get('telephone')!.touched)"
                             >
@@ -108,153 +108,153 @@
                             </small>
                           </div>
                           <div class="form-group col-md-6">
-                            <label>WhatsApp</label>
-                            <input type="number" class="form-control form-control-sm" placeholder="Numero WhatsApp">
+                            <label>{{'fiche-suivi.info.whatsApp' | translate}}</label>
+                            <input type="number" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info.numero_whatsapp' | translate}}">
                           </div>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-6">
-                            <label>Nom de l'Encadreur*</label>
+                            <label>{{'fiche-suivi.info.name' | translate}}</label>
                             <input formControlName="region"
                                    disabled
                                    value="{{user}}"
                                    type="text" class="form-control form-control-sm" placeholder="{{user}}">
                           </div>
                           <div class="form-group col-md-6">
-                            <label>Email</label>
-                            <input type="email" class="form-control form-control-sm" placeholder="Adresse Mail">
+                            <label>{{'fiche-suivi.info.info' | translate}}</label>
+                            <input type="email" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info.adresse' | translate}}">
                           </div>
                         </div>
                       </div>
 
                       <div class="col ">
                         <div class="text-center form-group">
-                          <label><u>Informations du site</u></label>
+                          <label><u>{{'fiche-suivi.info-general'| translate}}</u></label>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-4">
-                            <label>Site*</label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Nom du site">
+                            <label>{{'fiche-suivi.info_general.site'| translate}}</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info_general.nom_site'| translate}}">
                           </div>
                           <div class="form-group col-md-4">
-                            <label>Coordonnées*</label>
-                            <input type="number" class="form-control form-control-sm" placeholder="Latitude">
+                            <label>{{'fiche-suivi.info_general.coordonnee'| translate}}</label>
+                            <input type="number" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info_general.latitude'| translate}}">
                           </div>
                           <div class="form-group col-md-4">
                             <label><p></p></label>
-                            <input type="number" class="form-control form-control-sm" placeholder="Longitude">
+                            <input type="number" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info_general.longitude'| translate}}">
                           </div>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-6">
-                            <label>Responsable*</label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Nom du Responsable">
+                            <label>{{'fiche-suivi.info_general.responsable'| translate}}</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info_general.nom_responsable'| translate}}">
                           </div>
                           <div class="form-group col-md-6">
-                            <label>Téléphone</label>
-                            <input type="number" class="form-control form-control-sm" placeholder="Numero de téléphone">
+                            <label>{{'fiche-suivi.info.telephone'| translate}}</label>
+                            <input type="number" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info.num_tel'| translate}}">
                           </div>
 
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-6">
-                            <label>Sup potentielle á exploiter</label>
+                            <label>{{'fiche-suivi.info_general.sup_potentielle' | translate}}</label>
                             <input type="text" class="form-control form-control-sm"
-                                   placeholder="Superficie potentielle á exploiter">
+                                   placeholder="{{'fiche-suivi.info_general.sup_potentielle' | translate}}">
                           </div>
                           <div class="form-group col-md-6">
-                            <label>Sup Emblavée</label>
-                            <input type="email" class="form-control form-control-sm" placeholder="Superficie Emblavée">
+                            <label>{{'fiche-suivi.info_general.sup_emblavée' | translate}}</label>
+                            <input type="email" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info_general.sup_emblavée' | translate}}">
                           </div>
                         </div>
                       </div>
                     </div>
                     <button [disabled]="validerFormCampagne.invalid && validerFormStep1.invalid"
-                            class="btn btn-primary btn-sm" (click)="next()">Suivant
+                            class="btn btn-primary btn-sm" (click)="next()">{{'fiche-suivi.suivant' | translate}}
                     </button>
                   </div>
 
                 </form>
                 <div id="inf2" class="content" role="tabpanel" aria-labelledby="inf2-trigger">
                   <div class="text-center form-group">
-                    <label> <u>Informations de l'exploitation </u></label>
+                    <label> <u>{{'fiche-suivi.info_exp.info' | translate}}</u></label>
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label>Nature de l'exploitation*</label>
+                      <label>{{'fiche-suivi.info_exp.nature' | translate}}</label>
                       <select class="form-control form-control-sm">
-                        <option selected disabled value="">-- selectionner la nature de l'exploitation --
+                        <option selected disabled value="">-- {{'fiche-suivi.info_exp.select.select_' | translate}} --
                         </option>
-                        <option value="cooperative">Coopérative</option>
-                        <option value="familiale">Familiale</option>
-                        <option value="privee">Privée</option>
+                        <option value="cooperative">{{'fiche-suivi.info_exp.select.cooperative' | translate}}</option>
+                        <option value="familiale">{{'fiche-suivi.info_exp.select.familiale' | translate}}</option>
+                        <option value="privee">{{'fiche-suivi.info_exp.select.privee' | translate}}</option>
                       </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label>Nombre d'adhérents</label>
-                      <input type="number" class="form-control form-control-sm" placeholder="Nombre">
+                      <label>{{'fiche-suivi.info_exp.nombre_adherant' | translate}}</label>
+                      <input type="number" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info_exp.nombre' | translate}}">
                     </div>
                     <div class="form-group col-md-3">
-                      <label>Nombre de bénéficiaires</label>
-                      <input type="number" class="form-control form-control-sm" placeholder="Nombre">
+                      <label>{{'fiche-suivi.info_exp.nombre_benéficiant' | translate}}</label>
+                      <input type="number" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info_exp.nombre' | translate}}">
                     </div>
                   </div>
 
-                  <label class="mt-2">Matériel Agricole*</label>
+                  <label class="mt-2">{{'fiche-suivi.info_exp.materiel_agricole' | translate}}</label>
                   <div class="form-row">
                     <div class="form-group col-md-3">
-                      <input type="text" class="form-control form-control-sm" placeholder="type">
+                      <input type="text" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info_exp.type' | translate}}">
                     </div>
                     <div class="form-group col-md-3">
-                      <input type="number" class="form-control form-control-sm" placeholder="nombre ">
+                      <input type="number" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info_exp.nombre' | translate}}">
                     </div>
                     <div class="form-group col-md-3">
-                      <input type="text" class="form-control form-control-sm" placeholder="etat">
+                      <input type="text" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info_exp.etat' | translate}}">
                     </div>
                     <div class="form-group col-md-3">
-                      <input type="textarea" class="form-control form-control-sm" placeholder="observation">
+                      <input type="textarea" class="form-control form-control-sm" placeholder="{{'fiche-suivi.info_exp.observation' | translate}}">
                     </div>
                   </div>
 
-                  <label class="mt-2">Eau d'irrigation*</label>
+                  <label class="mt-2">{{'fiche-suivi.info_exp.eau_irrigation' | translate}}</label>
                   <div class="form-row">
                     <div class="form-group col-md-3">
-                      <label>source d'eau</label>
+                      <label>{{'fiche-suivi.info_exp.source_eau' | translate}}</label>
                       <select class="form-control form-control-sm">
-                        <option selected disabled value="">-- selectionner la source d'irrigation --
+                        <option selected disabled value="">-- {{ 'fiche-suivi.info_exp.select_source' | translate}} --
                         </option>
-                        <option value="puisards">Puisards</option>
-                        <option value="puits">Puits</option>
-                        <option value="forage">Forage</option>
-                        <option value="robinet">Robinet</option>
-                        <option value="lac">Marc / Lac</option>
+                        <option value="puisards">{{ 'fiche-suivi.info_exp.puisards' | translate}}</option>
+                        <option value="puits">{{ 'fiche-suivi.info_exp.puits' | translate}}</option>
+                        <option value="forage">{{ 'fiche-suivi.info_exp.forage' | translate}}</option>
+                        <option value="robinet">{{ 'fiche-suivi.info_exp.robinet' | translate}}</option>
+                        <option value="lac">{{ 'fiche-suivi.info_exp.marc_lac' | translate}}</option>
                       </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label>Moyens d'exhaure</label>
+                      <label>{{ 'fiche-suivi.info_exp.moyens_exhaure' | translate}}</label>
                       <select class="form-control form-control-sm">
-                        <option selected disabled value="">-- selectionner le Moyen d'exhaure --
+                        <option selected disabled value="">-- {{ 'fiche-suivi.info_exp.select_moyen' | translate}} --
                         </option>
-                        <option value="manuel">Manuel</option>
-                        <option value="gmp">GMP</option>
-                        <option value="solaire">Solaire</option>
-                        <option value="electrique">Electrique</option>
+                        <option value="manuel">{{ 'fiche-suivi.info_exp.manuel' | translate}}</option>
+                        <option value="gmp">{{ 'fiche-suivi.info_exp.gmp' | translate}}</option>
+                        <option value="solaire">{{ 'fiche-suivi.info_exp.solaire' | translate}}</option>
+                        <option value="electrique">{{ 'fiche-suivi.info_exp.electrique' | translate}}</option>
                       </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label>Systéme d'irrigation</label>
-                      <input type="text" class="form-control form-control-sm" placeholder="Systéme d'irrigation">
+                      <label>{{ 'fiche-suivi.info_exp.systéme_irrigation' | translate}}</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="{{ 'fiche-suivi.info_exp.systéme_irrigation' | translate}}">
                     </div>
                     <div class="form-group col-md-3">
-                      <label>Nature du Sol</label>
-                      <input type="text" class="form-control form-control-sm" placeholder="Nature de votre sol">
+                      <label>{{ 'fiche-suivi.info_exp.nature_Sol' | translate}}</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="{{ 'fiche-suivi.info_exp.nature_Sol_placeholder' | translate}}">
                     </div>
                   </div>
 
-                  <label class="mt-2">Principale Techniques*</label>
+                  <label class="mt-2">{{ 'fiche-suivi.info_exp.principale_techniques' | translate}}</label>
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label>Technique vulgarisées</label>
+                      <label>{{ 'fiche-suivi.info_exp.technique_vulgarise' | translate}}</label>
                       <ng-select
                         [clearable]="true"
                         [searchable]="true"
@@ -264,78 +264,78 @@
                         appearance="outline"
                         bindLabel="name"
                         class="custom-class"
-                        placeholder="selection des technique vulgarisées"
+                        placeholder="{{ 'fiche-suivi.info_exp.selection_technique' | translate}}"
                       >
-                        <ng-option value="L">Preparation du Compost</ng-option>
-                        <ng-option value="L">Confection des Planches et des billons</ng-option>
-                        <ng-option value="L">Fumure de fond Organique</ng-option>
-                        <ng-option value="L">Fumure de fond Minérale</ng-option>
-                        <ng-option value="L">Entretien des pépiniéres</ng-option>
-                        <ng-option value="L">Traitement de pépiniére avant le repiquage</ng-option>
-                        <ng-option value="L">Repiquage</ng-option>
-                        <ng-option value="L">Desherbage</ng-option>
-                        <ng-option value="L">Binage</ng-option>
-                        <ng-option value="L">Buttage</ng-option>
-                        <ng-option value="L">Tuteurage</ng-option>
-                        <ng-option value="L">Fertilisation de couverture</ng-option>
-                        <ng-option value="L">Traitement des ennemis des cultures</ng-option>
-                        <ng-option value="L">Traitement de récolte et post-récolte</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.preparation_compost' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.confection_planches' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.fumure_organique' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.fumure_minerale' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.entretien_pepinieres' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.traitement_repiquage' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.repiquage' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.desherbage' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.binage' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.buttage' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.tuteurage' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.fertilisation_couverture' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.traitement_ennemis_culture' | translate}}</ng-option>
+                        <ng-option value="L">{{ 'fiche-suivi.info_exp.traitement_post_recolte' | translate}}</ng-option>
                       </ng-select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label>Type de Fertélisant</label>
-                      <input type="text" class="form-control form-control-sm" placeholder="Type de Fertilisant">
+                      <label>{{ 'fiche-suivi.info_exp.type_fertelisant' | translate}}</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="{{ 'fiche-suivi.info_exp.type_fertelisant' | translate}}">
                     </div>
                     <div class="form-group col-md-3">
-                      <label>Quantité utilisée</label>
-                      <input type="number" class="form-control form-control-sm" placeholder="Quantité utilisée">
+                      <label>{{ 'fiche-suivi.info_exp.quantite_utilisee' | translate}}</label>
+                      <input type="number" class="form-control form-control-sm" placeholder="{{ 'fiche-suivi.info_exp.quantite_utilisee' | translate}}">
                     </div>
                   </div>
 
-                  <button class="btn btn-primary btn-sm " (click)="previous()">Précédent</button>
-                  <button class="btn btn-primary btn-sm ml-1" (click)="next()">Suivant</button>
+                  <button class="btn btn-primary btn-sm " (click)="previous()">{{ 'fiche-suivi.info_exp.precedent' | translate}}</button>
+                  <button class="btn btn-primary btn-sm ml-1" (click)="next()">{{ 'fiche-suivi.info_exp.suivant' | translate}}</button>
                 </div>
                 <div id="inf3" class="content" role="tabpanel" aria-labelledby="inf3-trigger">
                   <div class="form-row">
                     <div class="form-group col-md-3">
-                      <label>Spéculations</label>
-                      <input type="text" class="form-control form-control-sm" placeholder="Spéculations">
+                      <label>{{ 'fiche-suivi.info_exp.speculations' | translate}}</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="{{ 'fiche-suivi.info_exp.speculations' | translate}}">
                     </div>
                     <div class="form-group col-md-2">
-                      <label>Variétés</label>
-                      <input type="text" class="form-control form-control-sm" placeholder="Variétés">
+                      <label>{{ 'fiche-suivi.info_exp.varietes' | translate}}</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="{{ 'fiche-suivi.info_exp.varietes' | translate}}">
                     </div>
                     <div class="form-group col-md-2">
-                      <label>Superficie</label>
-                      <input type="text" class="form-control form-control-sm" placeholder="Superficie">
+                      <label>{{ 'fiche-suivi.info_exp.superficie' | translate}}</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="{{ 'fiche-suivi.info_exp.superficie' | translate}}">
                     </div>
                     <div class="form-group col-md-3">
-                      <label>Date de sémis en pépiniére</label>
+                      <label>{{ 'fiche-suivi.info_exp.Date_pepiniere' | translate}}</label>
                       <input type="date" class="form-control form-control-sm">
                     </div>
                     <div class="form-group col-md-2">
-                      <label>Date de repiquage</label>
+                      <label>{{ 'fiche-suivi.info_exp.date_repiquage' | translate}}</label>
                       <input type="date" class="form-control form-control-sm">
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-4">
-                      <label>Stade de cultrure</label>
-                      <input type="text" class="form-control form-control-sm" placeholder="Stade de cultrure">
+                      <label>{{ 'fiche-suivi.info_exp.stade_cultrure' | translate}}</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="{{ 'fiche-suivi.info_exp.stade_cultrure' | translate}}">
                     </div>
                     <div class="form-group col-md-4">
-                      <label>Situation phytosanitaire</label>
+                      <label>{{ 'fiche-suivi.info_exp.situation_phytosanitaire' | translate}}</label>
                       <select class="form-control form-control-sm">
-                        <option selected disabled value="">-- selectionner la Situation phytosanitaire --
+                        <option selected disabled value="">-- {{ 'fiche-suivi.info_exp.select_phytosanitaire' | translate}} --
                         </option>
-                        <option value="ennemies">Ennemies</option>
-                        <option value="maladies">Maladies</option>
-                        <option value="lutes">Moyens de lutte / traitements</option>
+                        <option value="ennemies">{{ 'fiche-suivi.info_exp.ennemies' | translate}}</option>
+                        <option value="maladies">{{ 'fiche-suivi.info_exp.maladies' | translate}}</option>
+                        <option value="lutes">{{ 'fiche-suivi.info_exp.moyens_lutte' | translate}}</option>
                       </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label>Observation</label>
-                      <input type="text" class="form-control form-control-sm" placeholder="Observation de la situation">
+                      <label>{{ 'fiche-suivi.info_exp.observation' | translate}}</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="{{ 'fiche-suivi.info_exp.observation_situation' | translate}}">
                     </div>
                     <!--                  <div class="form-group col-md-1 mt-4">-->
                     <!--                    <label><p></p></label>-->
@@ -345,11 +345,11 @@
                     <!--                    </button>-->
                     <!--                  </div>-->
                   </div>
-                  <button class="btn btn-sm btn-primary" (click)="previous()">Précédent</button>
-                  <button class="btn btn-primary btn-sm ml-1" (click)="next()">Suivant</button>
+                  <button class="btn btn-sm btn-primary" (click)="previous()">{{ 'fiche-suivi.info_exp.precedent' | translate}}</button>
+                  <button class="btn btn-primary btn-sm ml-1" (click)="next()">{{ 'fiche-suivi.info_exp.suivant' | translate}}</button>
                 </div>
                 <div id="inf4" class="content" role="tabpanel" aria-labelledby="inf4-trigger">
-                  <button class="btn btn-sm btn-primary" (click)="previous()">Précédent</button>
+                  <button class="btn btn-sm btn-primary" (click)="previous()">{{ 'fiche-suivi.info_exp.precedent' | translate}}</button>
                   <!--                <button type="submit" class="btn btn-primary">Submit</button>-->
                 </div>
               </div>

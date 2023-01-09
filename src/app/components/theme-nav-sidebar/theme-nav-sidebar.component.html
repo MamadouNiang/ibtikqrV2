@@ -107,7 +107,7 @@
       <img alt="AdminLTE Logo" class="brand-image img-circle elevation-3" src="assets/img/logo.png"
            style="opacity:1.2">
       <span class="brand-text font-weight-light "
-            style="color: #ffffff;font-size: 70%;"><STRONG>GESTION DES SUBVENTIONS</STRONG></span>
+            style="color: #ffffff;font-size: 70%;"><STRONG>{{"navbar.gestion_subventions" | translate}}</STRONG></span>
     </a>
 
     <div class="sidebar">
@@ -119,25 +119,25 @@
             <a class="nav-link" href="pages/widgets.html" routerLink="dashbord">
               <i class="nav-icon fas fa-home"></i>
               <p>
-                Accueil
+                {{"navbar.home"| translate}}
               </p>
             </a>
           </li>
-          <li *ngIf="isAdmin()" class="nav-header">GESTION DE STOCK</li>
+          <li *ngIf="isAdmin()" class="nav-header">{{"navbar.gestion_stock"| translate}}</li>
           <li *ngIf="isAdmin()" class="nav-item">
             <a class="nav-link" routerLink="repartitionStock">
               <i class="nav-icon fas fa-box-tissue"></i>
               <p>
-                Répartition des subventions
+                {{"navbar.rep_subventions" | translate}}
               </p>
             </a>
           </li>
-          <li *ngIf="isAdmin() || isCommission() " class="nav-header">CAMPAGNES AGRICOLES</li>
+          <li *ngIf="isAdmin() || isCommission() " class="nav-header">{{"navbar.Campagne_Agricole" | translate}}</li>
           <li *ngIf="isAdmin() || isCommission() " class="nav-item">
             <a class="nav-link" routerLink="intrants">
               <i class="nav-icon fas fa-adjust"></i>
               <p>
-                Définition des Intrants
+                {{"navbar.def_intrant" | translate}}
               </p>
             </a>
           </li>
@@ -145,17 +145,17 @@
             <a class="nav-link" routerLink="campagnes">
               <i class="nav-icon fas fa-calendar-plus"></i>
               <p>
-                Définition d'une Campagne
+                {{"navbar.def_campagne"| translate}}
               </p>
             </a>
           </li>
 
-          <li *ngIf="isAdmin() || isCommission() || isDelegue()" class="nav-header">EVALUATION DU MARCHÉ</li>
+          <li *ngIf="isAdmin() || isCommission() || isDelegue()" class="nav-header">{{"navbar.evaluation_marché"|translate}}</li>
           <li *ngIf="isAdmin() || isCommission() || isDelegue()" class="nav-item">
             <a class="nav-link" href="pages/widgets.html" routerLink="fiche">
               <i class="nav-icon fas fa-file-prescription"></i>
               <p>
-                Fiche de suivi des activités
+                {{"navbar.fiche_suivi"|translate}}
                 <!--                <span class="right badge badge-danger">New</span>-->
               </p>
             </a>
@@ -165,7 +165,7 @@
             <a class="nav-link" href="pages/widgets.html" routerLink="commRecenssement">
               <i class="nav-icon fas fa-user-plus"></i>
               <p>
-                Commission de recenssement
+                {{"navbar.commission_recessement"|translate}}
               </p>
             </a>
           </li>
@@ -173,16 +173,16 @@
             <a class="nav-link" href="pages/widgets.html" routerLink="commEvaluation">
               <i class="nav-icon fas fa-check"></i>
               <p>
-                Commission d'evaluation
+                {{"navbar.commission_evalution"|translate}}
               </p>
             </a>
           </li>
-          <li *ngIf="isAdmin()" class="nav-header">Gestion Personnels</li>
+          <li *ngIf="isAdmin()" class="nav-header"> {{"navbar.gestion_personnel"|translate}}</li>
           <li *ngIf="isAdmin() " class="nav-item">
             <a class="nav-link" routerLink="users">
               <i class="nav-icon fas fa-users"></i>
               <p>
-                Gestions des utilisateurs
+                {{"navbar.gestion_utilisateur"|translate}}
               </p>
             </a>
           </li>
