@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {DetailDataBoundEventArgs, Grid, GridComponent, RowSelectEventArgs, SelectionSettingsModel} from '@syncfusion/ej2-angular-grids';
+import {DetailDataBoundEventArgs, FilterSettingsModel, Grid, GridComponent, RowSelectEventArgs, SelectionSettingsModel} from '@syncfusion/ej2-angular-grids';
 import {ToastAnimationSettingsModel, ToastPositionModel} from '@syncfusion/ej2-angular-notifications';
 import {DatePipe} from '@angular/common';
 import {JwtHelperService} from '@auth0/angular-jwt';
@@ -10,7 +10,7 @@ import {StatisticalSheetsService} from '../../../services/endpoints/statistical-
 @Component({
   selector: 'app-comm-evaluation',
   templateUrl: './comm-evaluation.component.html',
-  styleUrls: ['./comm-evaluation.component.css'],
+  styleUrls: ['./comm-evaluation.component.scss'],
   providers: [DatePipe],
 })
 export class CommEvaluationComponent implements OnInit {
@@ -53,7 +53,7 @@ export class CommEvaluationComponent implements OnInit {
     this.myDateMonth = this.datePipe.transform(new Date(), 'MM');
 
   }
-
+  public filterOptions: FilterSettingsModel;
   ngOnInit(): void {
     this.region = localStorage.getItem('region');
     this.getRegions();
@@ -62,6 +62,10 @@ export class CommEvaluationComponent implements OnInit {
 
     this.toolbar = ['Search'];
     this.selectionOptions = {checkboxMode: 'ResetOnRowClick'};
+    this.filterOptions = {
+      type: "CheckBox",
+      ignoreAccent: true,
+    };
 
   }
   campagnesForm() {
@@ -83,8 +87,8 @@ export class CommEvaluationComponent implements OnInit {
   rowSelected(args: RowSelectEventArgs) {
     let tempTab = [];
     this.grid.getSelectedRecords().filter(select => {
-      if (select['actived'] === null) {
-        tempTab.push(select);
+      if (select['status'] === 'PENDING' || select['status'] === 'DELEGATE_REJECTED') {
+        tempTab.push(select['id']);
       }
     });
     this.tailleSelect = (tempTab).length;
@@ -94,8 +98,8 @@ export class CommEvaluationComponent implements OnInit {
   rowDeSelected(args: RowSelectEventArgs) {
     let tempTab = [];
     this.grid.getSelectedRecords().filter(select => {
-      if (select['actived'] === false) {
-        tempTab.push(select);
+      if (select['status'] === 'PENDING' || select['status'] === 'DELEGATE_REJECTED') {
+        tempTab.push(select['id']);
       }
     });
     this.tailleSelect = (tempTab).length;
@@ -104,15 +108,12 @@ export class CommEvaluationComponent implements OnInit {
 
 
   async getAllCMdr(cdBanque) {
-    console.log(this.resTrefBanques);
     const dataFilter = this.resTrefBanques.filter(item => {
       if (item.cdBanque === cdBanque) {
         return item;
       }
     });
     this.resTrefMdr = dataFilter[0].t_donne_mdrBank;
-    console.log('resTrefMdr', this.resTrefMdr);
-
   }
 
   onCreate(a) {
@@ -131,24 +132,23 @@ export class CommEvaluationComponent implements OnInit {
   }
 
   rowDataBound($event: any) {
-    if ($event.data.actived) {
-      console.log($event.row.getElementsByClassName('e-gridchkbox')[0].classList.add('cheRemove'));
-      // console.log($event.row.getElementsByClassName('e-checkbox-wrapper')[0].classList.add("cheRemove"))
-      // $event.row.getElementsByClassName('e-gridchkbox')[0].classList.add('nour');
-      // $event.row.getElementsByClassName('e-checkbox-wrapper')[0].classList.add('nour')
+    if ($event.data.status==="DELEGATE_VALIDATED") {
+      $event.row.getElementsByClassName('e-gridchkbox')[0].classList.add('cheRemove');
+      $event.row.classList.add('niang');
+    }
+    if ($event.data.status==="DELEGATE_REJECTED" && localStorage.getItem('roleName')!="ADMINISTRATOR") {
+      $event.row.getElementsByClassName('e-gridchkbox')[0].classList.add('cheRemove');
       $event.row.classList.add('niang');
     }
   }
 
 
   getStaticalSheetByRegion() {
+
     const region = (JSON.parse(localStorage.getItem('regions')).filter((e,id) =>  e.name === localStorage.getItem('region')));
     const campaignId = this.validerFormCampagne.get('idCamp').value;
-    // console.log(JSON.parse(localStorage.getItem('regions')));
-    // console.log('---',localStorage.getItem('region'));
     console.log(region[0].id,Number(campaignId));
     this.sheetsService.getstatisticalBRegionAndCampaign(region[0].id,Number(campaignId)).subscribe((value)=>{
-      console.log(value);
       if (value.length === 0){
         this.dateStaticalSheetByRegion = [];
         this.element.show({
@@ -156,10 +156,41 @@ export class CommEvaluationComponent implements OnInit {
         });
       }else {
         this.dateStaticalSheetByRegion = value;
+        console.log(this.filterOptions);
       }
     },(error)=>{
       console.log(error);
     })
   }
 
+  validerStaticalSheet() {
+    this.sheetsService.patchStatus(this.TabSaveEcheancier,"DELEGATE_VALIDATED").subscribe((value)=>{
+      console.log(value);
+
+    },(error)=>{
+      console.log(error);
+    },()=>{
+      this.getStaticalSheetByRegion();
+      setTimeout(()=>{
+        this.tailleSelect = 0;
+      },100)
+
+    })
+  }
+
+  rejeterStaticalSheet() {
+
+    this.sheetsService.patchStatus(this.TabSaveEcheancier,"DELEGATE_REJECTED").subscribe((value)=>{
+      console.log(value);
+
+    },(error)=>{
+      console.log(error);
+    },()=>{
+      this.getStaticalSheetByRegion();
+      setTimeout(()=>{
+        this.tailleSelect = 0;
+      },100)
+
+    })
+  }
 }

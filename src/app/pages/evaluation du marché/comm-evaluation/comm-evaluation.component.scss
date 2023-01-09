@@ -1,18 +1,26 @@
 .statustxt.e-activecolor {
   color: #00cc00;
-//position: relative;
+  //position: relative;
   top: 9px;
 }
+
 .statustxt.e-inactivecolor {
   color: #e60000;
-//position: relative;
+  //position: relative;
   top: 9px;
 }
-.niang{
+.statustxt.e-warningactivecolor {
+  color: #fa9700;
+  //position: relative;
+  top: 9px;
+}
+
+.niang {
   pointer-events: none;
   cursor: not-allowed;
   opacity: 0.7;
 }
-.cheRemove{
+
+.cheRemove {
   opacity: 0;
 }

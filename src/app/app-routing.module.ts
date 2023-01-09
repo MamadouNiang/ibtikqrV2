@@ -13,6 +13,7 @@ import {MapDashbordComponent} from './pages/dashbord/map-dashbord/map-dashbord.c
 import {InstanceStockComponent} from './pages/dashbord/instance-stock/instance-stock.component';
 import {FicheSuiviComponent} from './pages/evaluation du marché/fiche-suivi/fiche-suivi.component';
 import {RepartitionDeStockComponent} from './pages/gestion de stock/repartition-de-stock/repartition-de-stock.component';
+import {StockGlobalComponent} from './pages/gestion de stock/stock-global/stock-global.component';
 
 const routes: Routes = [
   {path: 'dashbord', component: DashbordComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
 
   {path: 'sidebar', component: ThemeNavSidebarComponent},
   {path: 'repartitionStock', component: RepartitionDeStockComponent},
+  {path: 'stock', component: StockGlobalComponent},
 
   {path: 'users', component: GestionUsersComponent},
   {path: 'login', component: LoginComponent},

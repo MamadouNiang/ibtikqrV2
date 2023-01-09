@@ -20,5 +20,8 @@ export class StatisticalSheetsService {
   getstatisticalBRegion(idRegion): Observable<any> {
     return this.http.get(this.endpoint + 'find-statistical-sheets-By/' + idRegion);
   }
+  patchStatus(ids, status): Observable<any> {
+    return this.http.post(this.endpoint + 'status/' + status, ids);
+  }
 
 }

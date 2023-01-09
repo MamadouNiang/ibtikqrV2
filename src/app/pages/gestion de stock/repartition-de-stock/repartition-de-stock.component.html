@@ -8,6 +8,20 @@
         <div class="col-sm-5">
           <h5 class="m-0 text-dark">{{'rapartition_stock.title' | translate }}</h5>
         </div>
+        <div style="margin-left: -3%" class="col-3  ml-4 mt-auto">
+          <!--          <form [formGroup]="validerFormCampagne">-->
+          <!--            <select-->
+          <!--              (change)="checkRegionAndCamp()"-->
+          <!--              formControlName="idCampaign"-->
+          <!--              class="form-control form-control-sm">-->
+          <!--              <option selected disabled value=""> &#45;&#45; selectionner une campagne &#45;&#45;-->
+          <!--              </option>-->
+          <!--              <option *ngFor="let ca of campagnes" value="{{ca.id}}">-->
+          <!--                {{ca.code}}-->
+          <!--              </option>-->
+          <!--            </select>-->
+          <!--          </form>-->
+        </div>
         <div style="margin-left: -3%" class="col-3 ml-4 mt-auto">
           <form [formGroup]="validerFormregion">
             <select
@@ -24,20 +38,7 @@
 
           </form>
         </div>
-        <div style="margin-left: -3%" class="col-3  ml-4 mt-auto">
-          <form [formGroup]="validerFormCampagne">
-            <select
-              (change)="checkRegionAndCamp()"
-              formControlName="idCampaign"
-              class="form-control form-control-sm">
-              <option selected disabled value=""> -- {{ 'rapartition_stock.select'| translate}} --
-              </option>
-              <option *ngFor="let ca of campagnes" value="{{ca.id}}">
-                {{ca.code}}
-              </option>
-            </select>
-          </form>
-        </div>
+
 
       </div>
       <hr>
@@ -86,7 +87,9 @@
                       <e-aggregate>
                         <e-columns>
                           <e-column field="totalCamp" type="max">
-                            <ng-template #footerTemplate let-data>{{data.max.toLocaleString()}}</ng-template>
+                            <ng-template #footerTemplate let-data>
+                              <div class="text-success font-weight-bold">{{data.max.toLocaleString()}}</div>
+                            </ng-template>
                           </e-column>
                         </e-columns>
                       </e-aggregate>
@@ -135,7 +138,9 @@
                             <ng-template #footerTemplate let-data>{{data.sum.toLocaleString()}}</ng-template>
                           </e-column>
                           <e-column field="totalCost" type="sum">
-                            <ng-template #footerTemplate let-data>{{data.sum.toLocaleString()}}</ng-template>
+                            <ng-template #footerTemplate let-data>
+                              <div class="text-success font-weight-bold">{{data.sum.toLocaleString()}}</div>
+                            </ng-template>
                           </e-column>
                         </e-columns>
                       </e-aggregate>
@@ -145,9 +150,12 @@
               </div>
               <br>
               <div class="row">
+
                 <div class="col-sm-12">
-                  <p class="text-center font-weight-bold" *ngIf="keyIntrant!=undefined">Liste des Agriculteurs de
-                    l'intrant : {{keyIntrant.name}} </p>
+                  <p class="text-center font-weight-bold" *ngIf="keyIntrant!=undefined">
+                    <a *ngIf="keyIntrant.id!=undefined">Liste des Agriculteurs de
+                      l'intrant :  {{keyIntrant.name}} </a>
+                  </p>
                   <ejs-grid #detailgridChild id="detailgridChild" [allowSelection]='false' [dataSource]='data'>
                     <e-columns>
                       <e-column field='farmerFirstName' headerText="{{ 'rapartition_stock.table.farmerFirstName' | translate}}" width='150'></e-column>
@@ -176,10 +184,16 @@
                             <ng-template #footerTemplate let-data>{{data.sum.toLocaleString()}}</ng-template>
                           </e-column>
                           <e-column field="quantity" type="max">
-                            <ng-template #footerTemplate let-data>{{keyIntrant.consoQuantityByIntrant.toLocaleString()}}</ng-template>
+                            <ng-template #footerTemplate let-data>
+                              <div
+                                *ngIf="keyIntrant!=undefined && keyIntrant.consoQuantityByIntrant!=undefined">{{keyIntrant.consoQuantityByIntrant.toLocaleString()}}</div>
+                            </ng-template>
                           </e-column>
                           <e-column field="totalCamp" type="max">
-                            <ng-template #footerTemplate let-data>{{keyIntrant.prixTot.toLocaleString()}}</ng-template>
+                            <ng-template #footerTemplate let-data>
+                              <div class="text-danger font-weight-bold h5"
+                                   *ngIf="keyIntrant!=undefined  && keyIntrant.prixTot!=undefined"><i class="fas fa-arrow-down">{{keyIntrant.prixTot.toLocaleString()}}</i></div>
+                            </ng-template>
                           </e-column>
                         </e-columns>
                       </e-aggregate>

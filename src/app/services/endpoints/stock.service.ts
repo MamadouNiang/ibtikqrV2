@@ -21,4 +21,8 @@ export class StockService {
   getStockByRegionId(regionId): Observable<any> {
     return this.http.get(this.endpoint + '/campaign/region/' + regionId);
   }
+
+  getStock(): Observable<any> {
+    return this.http.get(this.endpoint);
+  }
 }

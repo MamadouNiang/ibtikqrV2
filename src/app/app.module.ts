@@ -19,6 +19,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {
   AggregateService,
   ColumnMenuService,
+  DetailRowService,
   EditService,
   FilterService,
   GridModule,
@@ -29,6 +30,7 @@ import {
   SortService,
   ToolbarService
 } from '@syncfusion/ej2-angular-grids';
+
 import {ToastModule} from '@syncfusion/ej2-angular-notifications';
 import {LoginComponent} from './pages/auth/login/login.component';
 
@@ -54,6 +56,7 @@ import {MapDashbordComponent} from './pages/dashbord/map-dashbord/map-dashbord.c
 import { InstanceStockComponent } from './pages/dashbord/instance-stock/instance-stock.component';
 import { FicheSuiviComponent } from './pages/evaluation du marché/fiche-suivi/fiche-suivi.component';
 import { RepartitionDeStockComponent } from './pages/gestion de stock/repartition-de-stock/repartition-de-stock.component';
+import { StockGlobalComponent } from './pages/gestion de stock/stock-global/stock-global.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -71,6 +74,7 @@ import { RepartitionDeStockComponent } from './pages/gestion de stock/repartitio
     InstanceStockComponent,
     FicheSuiviComponent,
     RepartitionDeStockComponent,
+    StockGlobalComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,6 +103,7 @@ import { RepartitionDeStockComponent } from './pages/gestion de stock/repartitio
     GroupService,
     SortService,
     PageService,
+    DetailRowService,
     ToolbarService,
     EditService,
     ToolbarService,
