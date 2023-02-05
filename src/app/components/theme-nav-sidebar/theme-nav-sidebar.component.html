@@ -80,6 +80,11 @@
     </ul>
 
     <ul *ngIf="isAuthenticated()" class="navbar-nav ml-auto">
+      <li class="nav-item ">
+        <a routerLink="profil" class="voirProfile" title="Voir mon profile">
+          <i style="margin-right: 5px;" class="nav-icon fa fa-user"></i>
+        </a>
+      </li>
       <div class="dropdown">
         <select #teams  (change)="getSelectedLang(teams.value)"
                 class="form-control form-control-sm">

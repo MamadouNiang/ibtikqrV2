@@ -42,4 +42,12 @@ export class UsersService {
   getAllUsers(): Observable<any> {
     return this.http.get(this.endpoint);
   }
+
+  getConnectedUser(): Observable<any>{
+    return this.http.get(this.endpoint + '/connected-user');
+  }
+
+  findByUsername(username): Observable<any>{
+    return this.http.get('http://localhost:8082/api/v1/users/' + username);
+  }
 }

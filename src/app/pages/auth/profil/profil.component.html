@@ -1,0 +1,42 @@
+<div class="content-wrapper">
+  <br>
+  <div class="card" style="display: flex;flex-direction: column;align-items: flex-end;">
+    <div class="card-body" >
+      <div class="header">
+        <div >
+          <div style="display: flex;gap: 8px;">
+            <span>{{"profile.title" | translate}}:</span>
+            <strong style="color: #007bff">{{currentRole}}</strong>
+          </div>
+          <div style="display: flex; gap: 8px">
+            <span>{{"profile.nom_user" | translate}}:</span>
+            <strong style="color: #007bff">{{user.name}}</strong>
+          </div>
+        </div>
+        <i  style="font-size: 100px;" class="nav-icon fa fa-user"></i>
+      </div>
+      <button (click)="editInformation()" class="btn btn-sm btn-primary">{{"profile.edit_profil"| translate}}
+        <i class="fas fa-pencil-alt icon-pleft5"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="content" style="padding-top: 30px;">
+    <div class="card" style="width: 25rem;">
+      <div class="card-body">
+        <div class="key-value">
+          <span>{{"profile.nni"| translate}}<i class="fas fa-id-card icon-pleft5"></i> :</span>
+          <span> {{ user.nni ? user.nni : 'A renseigner'}}</span>
+        </div>
+        <div class="key-value">
+          <span>{{"profile.email" | translate}}<i class="fa fa-envelope icon-pleft5"></i> :</span>
+          <span>{{ user.email ? user.email : 'A renseigner'}}</span>
+        </div>
+        <div class="key-value">
+          <span>{{".profile.tel"}}<i class="fa fa-phone icon-pleft5"></i> :</span>
+          <span>{{user.tel ? user.tel : 'A renseigner'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

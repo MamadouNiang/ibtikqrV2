@@ -1,0 +1,30 @@
+.header{
+  display: flex;
+  align-items: flex-end;
+}
+
+.user-icon{
+  margin-right: 5px;
+}
+
+.content{
+  display: flex;
+  gap: 32px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.key-value{
+  display: flex;
+  gap: 64px;
+}
+
+.card-body{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.icon-pleft5{
+  padding-left: 5px;
+}

@@ -388,5 +388,14 @@
   "Brakna":"Brakna",
   "Assaba":"Assaba",
   "Adrar":"Adrar",
-  "stock_error": "Erreur trouvée !"
+  "stock_error": "Erreur trouvée !",
+  "profile":{
+    "title" : "Profile",
+    "nom_user": "Nom utilisateur",
+    "edit_profil": "Modifier mon profile",
+    "nni": "Nni",
+    "email": "email",
+    "tel": "Tel",
+    "reseigner": "A renseigner"
+  }
 }
