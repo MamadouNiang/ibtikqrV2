@@ -14,6 +14,7 @@ import {InstanceStockComponent} from './pages/dashbord/instance-stock/instance-s
 import {FicheSuiviComponent} from './pages/evaluation du marché/fiche-suivi/fiche-suivi.component';
 import {RepartitionDeStockComponent} from './pages/gestion de stock/repartition-de-stock/repartition-de-stock.component';
 import {StockGlobalComponent} from './pages/gestion de stock/stock-global/stock-global.component';
+import {ProfilComponent} from './pages/auth/profil/profil.component';
 
 const routes: Routes = [
   {path: 'dashbord', component: DashbordComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
   {path: 'commRecenssement', component: CommRecenssementComponent},
   {path: 'fiche', component: FicheSuiviComponent},
   {path: 'commEvaluation', component: CommEvaluationComponent},
+  {path: 'profil', component: ProfilComponent},
 
   {path: '', redirectTo: 'login', pathMatch: 'full'},
 ];

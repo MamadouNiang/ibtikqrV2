@@ -1,0 +1,70 @@
+<form [formGroup]="editInformationForm" (ngSubmit)="save()">
+  <div class="table-responsive ">
+    <br>
+    <div style="display: flex;flex-direction: row; gap: 370px; margin: 0 30px 0 30px">
+      <p  class="text-center "><strong>Modifier
+         </strong>
+      </p>
+      <button (click)="modal.dismiss()"> <i  class="fa fa-window-close" aria-hidden="true"></i></button>
+     </div>
+    <br>
+    <div class="container text-center">
+
+      <div class="row g-2 mt-2">
+        <div class="col"><span>User name</span></div>
+        <div class="col-8">
+          <input
+                 class="form-control text-center form-control-xs form-control-sm"
+                 formControlName="username"
+                 placeholder="username">
+        </div>
+      </div>
+      <div class="row g-2 mt-2">
+        <div class="col"><span>Nom</span></div>
+        <div class="col-8">
+          <input
+            class="form-control text-center form-control-xs form-control-sm"
+            formControlName="name"
+            placeholder="name">
+        </div>
+      </div>
+      <div class="row g-2 mt-2">
+        <div class="col"><span>Nni</span></div>
+        <div class="col-8">
+          <input
+            class="form-control text-center form-control-xs form-control-sm"
+            formControlName="nni"
+            placeholder="nni">
+        </div>
+      </div>
+      <div class="row g-2 mt-2">
+        <div class="col"><span>email</span></div>
+        <div class="col-8">
+          <input
+            class="form-control text-center form-control-xs form-control-sm"
+            formControlName="email"
+            placeholder="email">
+        </div>
+      </div>
+      <div class="row g-2 mt-2">
+        <div class="col"><span>tel</span></div>
+        <div class="col-8">
+          <input
+            class="form-control text-center form-control-xs form-control-sm"
+            formControlName="tel"
+            placeholder="tel">
+        </div>
+      </div>
+      <div class="row g-2 mt-2">
+        <div class="col"><span></span></div>
+        <div class="col-4">
+          <button [disabled]="editInformationForm.invalid "
+                  class="btn btn-sm btn-success btn-block"
+                  type="submit">{{'campagne.edit.valider' | translate}}
+          </button>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+</form>

@@ -13,7 +13,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 //ej2
 // import the GridModule for the Grid component
 import {
@@ -57,6 +57,8 @@ import { InstanceStockComponent } from './pages/dashbord/instance-stock/instance
 import { FicheSuiviComponent } from './pages/evaluation du marché/fiche-suivi/fiche-suivi.component';
 import { RepartitionDeStockComponent } from './pages/gestion de stock/repartition-de-stock/repartition-de-stock.component';
 import { StockGlobalComponent } from './pages/gestion de stock/stock-global/stock-global.component';
+import { ProfilComponent } from './pages/auth/profil/profil.component';
+import { EditProfilComponent } from './pages/auth/profil/edit-profil/edit-profil.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -75,6 +77,8 @@ import { StockGlobalComponent } from './pages/gestion de stock/stock-global/stoc
     FicheSuiviComponent,
     RepartitionDeStockComponent,
     StockGlobalComponent,
+    ProfilComponent,
+    EditProfilComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,6 +94,7 @@ import { StockGlobalComponent } from './pages/gestion de stock/stock-global/stoc
     DialogModule,
     AccumulationChartModule,
     HttpClientModule,
+    NgbModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
